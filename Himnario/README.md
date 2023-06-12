@@ -16,3 +16,8 @@ This is a web application that serves a collection of Spanish hymns commonly use
 ```bash
 git clone https://github.com/alejandronepro/Church.git
 
+2. Change to the project directory:
+
+```bash
+cd Church/Himnario
+
