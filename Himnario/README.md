@@ -6,14 +6,14 @@ This is a web application that serves a collection of Spanish hymns commonly use
 
 - Access a vast collection of Spanish hymns.
 - Search for specific hymns by title, number, or keywords.
-- Display lyrics and sheet music for each hymn.
+- Display lyrics for each hymn.
 - Navigate through hymns using pagination.
 
 ## Prerequisites
 
 Before running the app, ensure that you have the following installed:
 
-- Python (version X.X.X)
+- Python (version >= 3.11.4)
 - Flask (version X.X.X)
 - Other dependencies (listed in requirements.txt)
 
