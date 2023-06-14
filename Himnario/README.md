@@ -9,6 +9,14 @@ This is a web application that serves a collection of Spanish hymns commonly use
 - Display lyrics and sheet music for each hymn.
 - Navigate through hymns using pagination.
 
+## Prerequisites
+
+Before running the app, ensure that you have the following installed:
+
+- Python (version X.X.X)
+- Flask (version X.X.X)
+- Other dependencies (listed in requirements.txt)
+
 ## Installation
 
 1. Clone the repository:
@@ -25,6 +33,6 @@ cd Church/Himnario
 
 3. Install the dependencies:
 
-```
+```bash
 pip install -r requirements.txt
 ```
