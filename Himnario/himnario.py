@@ -6,31 +6,34 @@ from PyQt5.QtWebEngineWidgets import QWebEngineView, QWebEngineSettings
 import http.server
 import socketserver
 import threading
-import webbrowser
 
-class MainWindow(QMainWindow):
+
+class WebServer:
     PORT = 8000
 
     def start_server(self):
         Handler = http.server.SimpleHTTPRequestHandler
-        while True:
-            try:
-                self.httpd = socketserver.TCPServer(("", self.PORT), Handler)
-                print("Server started on port", self.PORT)
-                self.httpd.serve_forever()
-            except OSError as e:
-                if e.errno == 48:  # Address already in use
-                    print(f"Port {self.PORT} is already in use. Trying a different port.")
-                    self.PORT += 1  # Try the next port number
-                else:
-                    raise e
+        try:
+            self.httpd = socketserver.TCPServer(("", self.PORT), Handler)
+            print("Server started on port", self.PORT)
+            self.httpd.serve_forever()
+        except OSError as e:
+            if e.errno == 48:  # Address already in use
+                print(f"Port {self.PORT} is already in use. Trying a different port.")
+            else:
+                raise e
 
-    def start_http_server(self):
-        # Start the HTTP server in a separate thread
+    def stop_server(self):
+        if hasattr(self, 'httpd'):
+            self.httpd.shutdown()
+
+    def start(self):
         server_thread = threading.Thread(target=self.start_server)
         server_thread.daemon = True
         server_thread.start()
 
+
+class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
@@ -72,19 +75,21 @@ class MainWindow(QMainWindow):
         self.move(window_rect.topLeft())
 
     def closeEvent(self, event):
-        if hasattr(self, 'httpd'):
-            # Stop the HTTP server if it's running
-            self.httpd.shutdown()
+        if hasattr(self, 'web_server'):
+            # Stop the web server if it's running
+            self.web_server.stop_server()
         event.accept()
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
 
     main_window = MainWindow()
-    main_window.start_http_server()
     main_window.showNormal()
     main_window.resize(1366, 768)
     main_window.centerOnScreen()
 
-    sys.exit(app.exec_())
+    web_server = WebServer()
+    web_server.start()
 
+    sys.exit(app.exec_())
