@@ -99,11 +99,11 @@ body {
 #title h1 {
   /* display: none; */
   font-family: 'tiltwarp', cursive;
-  color: #fff;
+  color: #ce682d;
   font-size: 6em;
   font-weight: 100;
-  /* text-shadow: 4px 4px 8px rgba(0,0,0,0.7); */
-  text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+  text-shadow: -2px -1px 1px rgba(0,0,0,0.7);
+  /* text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black; */
 }
 
 #searchbox {
