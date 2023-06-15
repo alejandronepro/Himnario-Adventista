@@ -1,0 +1,150 @@
+/* THEMES */
+#theme_all, .theme_all {
+	background-image: url(img/ico_theme_all_themes.png);
+}
+.theme_all:hover, #theme_all:hover, #theme_all.selected {
+	background-image: url(img/ico_theme_all_themes_selected.png);
+}
+
+#theme_cult, .theme_cult {
+	background-image: url(img/ico_theme_cult.png);
+}
+.theme_cult:hover, #theme_cult:hover, #theme_cult.selected {
+	background-image: url(img/ico_theme_cult_selected.png);
+}
+
+#theme_god_father, .theme_god_father {
+	background-image: url(img/ico_theme_god_father.png);
+}
+.theme_god_father:hover, #theme_god_father:hover, #theme_god_father.selected {
+	background-image: url(img/ico_theme_god_father_selected.png);
+}
+
+#theme_gospel, .theme_gospel {
+	background-image: url(img/ico_theme_gospel.png);
+}
+.theme_gospel:hover, #theme_gospel:hover, #theme_gospel.selected {
+	background-image: url(img/ico_theme_gospel_selected.png);
+}
+
+#theme_christian_home, .theme_christian_home {
+	background-image: url(img/ico_theme_christian_home.png);
+}
+.theme_christian_home:hover, #theme_christian_home:hover, #theme_christian_home.selected {
+	background-image: url(img/ico_theme_christian_home_selected.png);
+}
+
+#theme_saint_spirit, .theme_saint_spirit {
+	background-image: url(img/ico_theme_saint_spirit.png);
+}
+.theme_christian_home:hover, #theme_saint_spirit:hover, #theme_saint_spirit.selected {
+	background-image: url(img/ico_theme_saint_spirit_selected.png);
+}
+
+#theme_christ, .theme_christ {
+	background-image: url(img/ico_theme_christ.png);
+}
+.theme_christ:hover, #theme_christ:hover, #theme_christ.selected {
+	background-image: url(img/ico_theme_christ_selected.png);
+}
+
+#theme_church, .theme_church {
+	background-image: url(img/ico_theme_church.png);
+}
+.theme_church:hover, #theme_church:hover, #theme_church.selected {
+	background-image: url(img/ico_theme_church_selected.png);
+}
+
+#theme_christian_life, .theme_christian_life {
+	background-image: url(img/ico_theme_christian_life.png);
+}
+.theme_christian_life:hover, #theme_christian_life:hover, #theme_christian_life.selected {
+	background-image: url(img/ico_theme_christian_life_selected.png);
+}
+
+#theme_sacred_scriptures, .theme_sacred_scriptures {
+	background-image: url(img/ico_theme_sacred_scriptures.png);
+}
+.theme_sacred_scriptures:hover, #theme_sacred_scriptures:hover, #theme_sacred_scriptures.selected {
+	background-image: url(img/ico_theme_sacred_scriptures_selected.png);
+}
+
+/* MODES */
+#mode_lyrics, .mode_lyrics {
+	background-image: url(img/ico_mode_lyrics.png);
+}
+.mode_lyrics:hover, #mode_lyrics:hover, #mode_lyrics.selected {
+	background-image: url(img/ico_mode_lyrics_selected.png);
+}
+
+#mode_instrumental, .mode_instrumental {
+	background-image: url(img/ico_mode_instrumental.png);
+}
+.mode_instrumental:hover, #mode_instrumental:hover, #mode_instrumental.selected {
+	background-image: url(img/ico_mode_instrumental_selected.png);
+}
+
+#mode_voices, .mode_voices {
+	background-image: url(img/ico_mode_voices.png);
+}
+.mode_voices:hover, #mode_voices:hover, #mode_voices.selected {
+	background-image: url(img/ico_mode_voices_selected.png);
+}
+
+/* APP BUTTONS */
+#app_buttons .close {
+	background-image: url(img/app_button_close.png);
+}
+#app_buttons .close:hover {
+	background-image: url(img/app_button_close_hover.png);
+}
+#app_buttons .help {
+	background-image: url(img/app_button_help.png);
+}
+#app_buttons .help:hover {
+	background-image: url(img/app_button_help_hover.png);
+}
+#app_buttons .fullscreen {
+	background-image: url(img/app_button_fullscreen.png);
+}
+#app_buttons .fullscreen:hover {
+	background-image: url(img/app_button_fullscreen_hover.png);
+}
+#app_buttons .info {
+	background-image: url(img/app_button_info.png);
+}
+#app_buttons .info:hover {
+	background-image: url(img/app_button_info_hover.png);
+}
+
+/* PLAYLIST ACTIONS */
+#playlist .actions #save_list {
+	background-image: url(img/ico_playlist_save.png);
+}
+#playlist .actions #save_list:hover {
+	background-image: url(img/ico_playlist_save_hover.png);
+}
+#playlist .actions #open_list {
+	background-image: url(img/ico_playlist_open.png);	
+}
+#playlist .actions #open_list:hover {
+	background-image: url(img/ico_playlist_open_hover.png);
+}
+#playlist .actions #play_list {
+	background-image: url(img/ico_playlist_play.png);
+}
+#playlist .actions #play_list:hover {
+	background-image: url(img/ico_playlist_play_hover.png);
+}
+#playlist .actions #clear_list {
+	background-image: url(img/ico_playlist_clear.png);	
+}
+#playlist .actions #clear_list:hover {
+	background-image: url(img/ico_playlist_clear_hover.png);
+}
+#playlist .actions #shuffle_list {
+	background-image: url(img/ico_playlist_shuffle.png);	
+}
+#playlist .actions #shuffle_list:hover {
+	background-image: url(img/ico_playlist_shuffle_hover.png);
+}
