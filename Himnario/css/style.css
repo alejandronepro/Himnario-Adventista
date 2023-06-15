@@ -59,7 +59,7 @@ body {
 	top: 0px;
 	left: 0px;
 	padding-top: 1px;
-	background: url("/css/img/main_background.png") no-repeat scroll 0% 0% / 100% 100%;
+	background: url("/css/img/bg.png") no-repeat scroll 0% 0% / 100% 100%;
 	background-size: cover;
 	background-position: right center;
 	width: 100%;
