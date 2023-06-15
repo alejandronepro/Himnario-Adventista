@@ -14,7 +14,7 @@ This is a web application that serves a collection of Spanish hymns commonly use
 Before running the app, ensure that you have the following installed:
 
 - Python (version >= 3.11.4)
-- Flask (version X.X.X)
+- Git (version >= 2.41.0)
 - Other dependencies (listed in requirements.txt)
 
 ## Installation
@@ -36,3 +36,20 @@ cd Church/Himnario
 ```bash
 pip install -r requirements.txt
 ```
+
+## Usage
+
+1. Run the project in your preferred terminal window.
+
+```bash
+python himnario.py
+```
+
+## Contact
+
+For any questions or suggestions, please feel free to reach out to the project maintainer:
+
+Alejandro Valdez
+alejandronepro@gmail.com
+
+I hope you find this Spanish Hymn App useful for your Adventist church services. May it enhance your worship experience and bring joy to your congregation!
