@@ -49,7 +49,7 @@ python himnario.py
 
 For any questions or suggestions, please feel free to reach out to the project maintainer:
 
-*Alejandro Valdez
-*alejandronepro@gmail.com
+* Alejandro Valdez
+* alejandronepro@gmail.com
 
 I hope you find this Spanish Hymn App useful for your Adventist church services. May it enhance your worship experience and bring joy to your congregation!
