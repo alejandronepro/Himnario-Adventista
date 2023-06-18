@@ -85,25 +85,27 @@ body {
 }
 
 #title {  
-  	/* background-image: url(img/title.png);
-  	background-repeat: no-repeat;
-	background-position: center;
-	background-size: contain; */
 	text-align: center;
-	position: relative;
 	padding-top: 1px;
 	margin: 2% auto 2%;
 	height: 17%;
 	max-height: 140px;
 }
 #title h1 {
-  /* display: none; */
-  font-family: 'tiltwarp', cursive;
-  color: #ce682d;
-  font-size: 6em;
-  font-weight: 100;
-  text-shadow: -2px -1px 1px rgba(0,0,0,0.7);
+  	margin: 0;
+  	font-family: 'tiltwarp', cursive;
+  	color: #ce682d;
+  	font-size: 6em;
+  	font-weight: 100;
+  	text-shadow: -2px -1px 1px rgba(0,0,0,0.7);
   /* text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black; */
+}
+#title h4 {
+	margin: 0;
+	line-height: 15px;
+	font-family: 'YatraOne-Regular', cursive;
+	font-weight: 100;
+	text-transform: uppercase;
 }
 
 #searchbox {
@@ -372,10 +374,11 @@ body {
 	background-image: url(img/logos.png);
 	position: absolute;
 	bottom: 30px;
+	right: 10px;
 	width: 100%;
 	height: 10%;
 	background-repeat: no-repeat;
-	background-position: center;
+	background-position: right;
 	background-size: contain;
 	max-height: 90px;
 }
@@ -755,3 +758,55 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+/* Styles for screens with width <= to 1080px and height <= 767px */
+@media screen and (max-width: 1080px) {
+	#title h1 {
+		font-size: 4em;
+	}
+	#title h4 {
+		font-size: 1.7em;
+	}
+}
+
+/* Styles for screens with width >= to 1081px and height >= 768px */
+@media screen and (min-width: 1080px) {
+	#title h1 {
+		font-size: 4.5em;
+	}
+	#title h4 {
+		font-size: 1.7em;
+	}
+	#searchbox {
+		top: 30%;
+	}
+}
+
+/* Styles for screens with width >= to 1081px and height >= 768px */
+@media screen and (min-width: 1440px) {
+	#title h1 {
+		font-size: 5.5em;
+	}
+	#title h4 {
+		font-size: 2em;
+	}
+	#searchbox {
+		top: 30%;
+	}
+}
+
+/* Styles for screens with width >= to 1081px and height >= 768px */
+/* @media screen and (min-width: 1440px) {
+	#title h1 {
+		top: 7%;
+		font-size: 5.5em;
+	}
+	#title h4 {
+		top: 13%;
+		font-size: 2.2em;
+	}
+	#searchbox {
+		top: 40%;
+	}
+	
+} */ 
