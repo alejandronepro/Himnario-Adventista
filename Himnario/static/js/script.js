@@ -8,8 +8,8 @@
 	var separator = '/'; 
 	var base_path = '.';
 		
-	var lyrics_dir = base_path + separator + 'Letra';
-	var music_dir = base_path + separator + 'Musica';
+	var lyrics_dir = base_path + separator + 'static/Letra';
+	var music_dir = base_path + separator + 'static/Musica';
 	
 	var selected_himn = '';
 	var selected_number = 0;
