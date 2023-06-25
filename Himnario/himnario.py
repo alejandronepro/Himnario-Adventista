@@ -1,54 +1,38 @@
 import sys
-import socket
-from PyQt5.QtCore import QUrl, Qt
-from PyQt5.QtWidgets import QApplication, QMainWindow
-from PyQt5.QtWebEngineWidgets import QWebEngineView, QWebEngineSettings
-import http.server
-import socketserver
 import threading
+import os
+from PyQt5.QtCore import QUrl, QCoreApplication, QTimer, Qt
+from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWebEngineWidgets import QWebEngineView
+from flask import Flask, render_template
+import signal
 
+app = Flask(__name__)
 
-class WebServer:
-    PORT = 8000
+@app.route('/')
+def index():
+    return render_template('index.html')
 
-    def start_server(self):
-        Handler = http.server.SimpleHTTPRequestHandler
-        try:
-            self.httpd = socketserver.TCPServer(("", self.PORT), Handler)
-            print("Server started on port", self.PORT)
-            self.httpd.serve_forever()
-        except OSError as e:
-            if e.errno == 48:  # Address already in use
-                print(f"Port {self.PORT} is already in use. Trying a different port.")
-            else:
-                raise e
+def run_flask_app():
+    app.run()
 
-    def stop_server(self):
-        if hasattr(self, 'httpd'):
-            self.httpd.shutdown()
-
-    def start(self):
-        server_thread = threading.Thread(target=self.start_server)
-        server_thread.daemon = True
-        server_thread.start()
-
+def stop_flask_app():
+    # Send SIGINT signal to the Flask app process
+    os.kill(os.getpid(), signal.SIGINT)
 
 class MainWindow(QMainWindow):
     def __init__(self):
-        super().__init__()
+        super(MainWindow, self).__init__()
 
-        # Create a web view widget
-        self.web_view = QWebEngineView(self)
+        # Create a QWebEngineView to display the web app
+        self.webview = QWebEngineView()
+        self.webview.load(QUrl("http://localhost:5000"))
 
-        # Enable JavaScript
-        settings = QWebEngineSettings.globalSettings()
-        settings.setAttribute(QWebEngineSettings.JavascriptEnabled, True)
+        # Set the web view as the central widget of the main window
+        self.setCentralWidget(self.webview)
 
-        # Load the URL of the website
-        self.web_view.setUrl(QUrl('http://127.0.0.1:8000/'))
-
-        # Add the web view widget to the main window
-        self.setCentralWidget(self.web_view)
+        # Show the main window
+        self.show()
 
     def keyPressEvent(self, event):
         if event.modifiers() == (Qt.ControlModifier | Qt.AltModifier):
@@ -74,22 +58,23 @@ class MainWindow(QMainWindow):
         window_rect.moveCenter(screen_rect.center())
         self.move(window_rect.topLeft())
 
-    def closeEvent(self, event):
-        if hasattr(self, 'web_server'):
-            # Stop the web server if it's running
-            self.web_server.stop_server()
-        event.accept()
-
-
 if __name__ == '__main__':
-    app = QApplication(sys.argv)
+    # Create the PyQt5 application
+    qtapp = QApplication(sys.argv)
 
-    main_window = MainWindow()
-    main_window.showNormal()
-    main_window.resize(1366, 768)
-    main_window.centerOnScreen()
+    # Start the Flask web app in a separate thread
+    flask_thread = threading.Thread(target=run_flask_app)
+    flask_thread.start()
 
-    web_server = WebServer()
-    web_server.start()
+    # Create a QMainWindow as the main window
+    window = MainWindow()
+    window.showNormal()
+    window.resize(1366, 768)
+    window.centerOnScreen()
+    window.setWindowTitle("Himnario Adventista")
 
-    sys.exit(app.exec_())
+    # Connect the termination of the PyQt5 app to stopping the Flask app
+    qtapp.aboutToQuit.connect(stop_flask_app)
+
+    # Start the PyQt5 event loop
+    sys.exit(qtapp.exec_())
