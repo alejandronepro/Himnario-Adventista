@@ -1,0 +1,776 @@
+<!doctype html>
+<html class="no-js" lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Himnario Adventista</title>
+  <meta name="description" content="Himnario Adventista Online. Nuevo himnario adventista. Sólo letra, instrumental y cantado. Aplicación multiplataforma.">
+  <meta name="author" content="ACES / Eduardo Ludi / Galito">
+  <meta name="viewport" content="width=device-width">
+  
+    <meta name="title" content="Himnario Adventista">
+  
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <link rel="stylesheet" href="/static/css/icons.css" />
+  <link rel="stylesheet" href="/static/css/dialog/dialog.css" />
+  <link rel="stylesheet" href="/static/font/stylesheet.css" />
+  
+  <script src="/static/js/libs/jquery-1.7.1.min.js"></script>
+  <script src="/static/js/libs/jquery-ui-1.8.18.custom.min.js"></script>
+  <script src="/static/js/libs/jquery.jplayer.min.js"></script>
+  <script src="/static/js/libs/jquery.tinyscrollbar.min.js"></script>
+  <script src="/static/js/accents.js"></script>
+  <link rel="shortcut icon" type="image/png" sizes="32x32" href="/static/css/img/favicon.png">
+</head> 
+<body>
+  <div id="main">
+  
+    <div id="app_buttons">
+      <a class="button fullscreen" href="#fullscreen" title="Modo pantalla completa (fullscreen)"><span>Pantalla Completa</span></a>
+      <a class="button help" id="button_help" href="#help" title="Mostrar ayuda"><span>Ayuda</span></a>
+      <div id="info_app" class="dialog">
+        <h3>Acerca del Himnario</h3>
+        <div></div>
+      </div>
+    </div>
+    <div id="title">
+      <h1>Himnario Adventista</h1>
+	  <h4>Armonía y Devoción en Cada Acorde</h4>
+    </div>
+	<audio id="audio" src="" hidden="hidden" oncanplay="audio_ready()" onended="audio_ended()"></audio>
+    <div id="searchbox">
+      <div class="inner">
+        <div class="menu_wrapper">
+          <div class="help_mode themes"></div>
+          <a id="theme" class="button_menu theme_all" href="#" title="Filtrar himnos por tema">&nbsp;</a>
+          <ul id="theme_menu" class="menu">
+            <li id="theme_all" class="item selected" data-range="0,0">
+              <a href="#" title="Mostrar todos los himnos de todos los temas">Todos los temas</a>
+            </li>
+            <li id="theme_cult" class="item" data-range="1-52">
+              <a href="#" title="Mostrar los himnos en Culto">Culto</a></li>
+            <li id="theme_god_father" class="item" data-range="53-77">
+              <a href="#" title="Mostrar los himnos en Dios El Padre">Dios El Padre</a>
+            </li>
+            <li id="theme_christ" class="item" data-range="78-189">
+              <a href="#" title="Mostrar los himnos en Jesucristo">Jesucristo</a>
+            </li>
+            <li id="theme_saint_spirit" class="item" data-range="190-203">
+              <a href="#" title="Mostrar los himnos en Espíritu Santo">Espíritu Santo</a>
+            </li>
+            <li id="theme_sacred_scriptures" class="item" data-range="204-208">
+              <a href="#" title="Mostrar los himnos en Las Sagradas Escrituras">Las Sagradas Escrituras</a>
+            </li>
+            <li id="theme_gospel" class="item" data-range="209-344">
+              <a href="#" title="Mostrar los himnos en El Evangelio">El Evangelio</a>
+            </li>
+            <li id="theme_christian_life" class="item" data-range="345-527">
+              <a href="#" title="Mostrar los himnos en La Vida Cristiana">La Vida Cristiana</a>
+            </li>
+            <li id="theme_church" class="item" data-range="528-588">
+              <a href="#" title="Mostrar los himnos en La Iglesia">La Iglesia</a>
+            </li>
+            <li id="theme_christian_home" class="item" data-range="589-613">
+              <a href="#" title="Mostrar los himnos en El Hogar Cristiano">El Hogar Cristiano</a>
+            </li>
+          </ul>  
+        </div>
+        <div id="finder">
+          <div class="help_mode find_number"></div>
+          <input id="number_tbx" type="number" name="number_tbx" value="" />
+          <div class="help_mode find_title"></div>
+          <input id="title_tbx" type="text" name="title_tbx" value="" />
+          <input id="slides_hbx" type="hidden" name="slides_hbx" value="" />
+          <input id="times_hbx" type="hidden" name="times_hbx" value="" />
+          <a class="clear_find" href="#"></a>
+        </div>
+        <div id="mode_and_play">
+          <div class="help_mode add_to_playlist"></div>
+          <a id="add_to_playlist" href="#" title="Agregar Himno a la lista de reproducci&oacute;n (Tecla rápida: +)">&nbsp;</a>
+          <div class="menu_wrapper">
+            <div class="help_mode modes"></div>
+          	<a id="mode" class="button_menu mode_lyrics" href="#" title="Modo de reproducci&oacute;n">&nbsp;</a>
+          	<ul id="mode_menu" class="menu">
+              <li id="mode_lyrics" class="item selected"><a href="#" title="Solo Letra">Solo letra</a></li>
+              <li id="mode_instrumental" class="item"><a href="#" title="Solo Letra">Instrumental</a></li>
+              <li id="mode_voices" class="item"><a href="#" title="Solo Letra">Cantado</a></li>
+          	</ul>  
+          </div>
+          <div class="help_mode do_play"></div>
+        	<a id="play" href="#" title="Reproducir himno (Tecla rápida: Enter)">&nbsp;</a>
+        </div>
+      </div>
+      <div id="search_results">
+        <div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
+        <div class="viewport">
+        		<ul class="overview">
+            </ul>
+        </div>
+        <a href="#" class="close"></a>
+      </div>
+    </div>
+    <div id="logos"></div>
+    <div id="playlist">
+      <div class="help_mode playlist"></div>
+      <!--div class="help_mode playlist_icons"></div-->
+      <div class="outer">
+        <div class="inner"></div>
+        <a href="#" class="move_button left"></a>
+        <a href="#" class="move_button right"></a>
+      </div>
+      <div class="actions">
+        <h3 class="title">Lista de reproducci&oacute;n</h3>
+        <!-- a href="#" id="open_list" class="button"><span>Abrir Lista</span></a-->
+        <a href="#" id="clear_list" class="button"><span>Limpiar Lista</span></a>
+        <!-- a href="#" id="save_list" class="button"><span>Guardar Lista</span></a-->
+        <a href="#" id="shuffle_list" class="button"><span>Mezclar Lista</span></a>
+        <a href="#" id="play_list" class="button"><span>Reproducir Lista</span></a>
+        <div id="shufflelist_dialog" class="dialog">
+          <h3 class="title">Mezclar lista</h3>
+          <p>
+            &iquest;Est&aacute; seguro que quiere mezclar los himnos de esta lista?<br/>
+            <small>Esta acci&oacute;n no se puede deshacer.</small>
+          </p>
+        </div>
+        <div id="clearlist_dialog" class="dialog">
+          <h3 class="title">Limpiar lista</h3>
+          <p>&iquest;Est&aacute; seguro que quiere remover todos los himnos de la lista actual?</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="pause">
+    <p id="pause_spin">en pausa<br/><small>espacio ó clic para continuar</small></p>
+  </div>
+  <div id="playing">
+    <img id="lyrics" src="#" data-slide="1"/>
+    <div id="player"></div>
+    <div class="controls">
+      <a href="#" class="button prev" title="Volver en la letra"><span>Anterior</span></a>
+      <a href="#" class="button next" title="Avanzar en la letra"><span>Siguente</span></a>
+      <a href="#" class="button home" title="Volver al menu"><span>Men&uacute;</span></a>
+    </div>
+  </div>
+  <div id="himns" class="hidden">
+  	<span class="himn" data-number="156" data-title="A Cristo coronad" data-slides="7" data-times="8000,26000,46000,64000,83000,101000"></span>
+	<span class="himn" data-number="150" data-title="A Cristo doy mi canto" data-slides="9" data-times="17000,34081,52000,70032,87000,105060,124000,143036"></span>
+	<span class="himn" data-number="404" data-title="A cualquiera parte" data-slides="12" data-times="4000,29000,42000,54000,66000,78000,91000,102000,115000,128000,140000"></span>
+	<span class="himn" data-number="147" data-title="A Dios sea gloria" data-slides="13" data-times="16000,32000,47000,63000,78000,94000,109000,125000,148000,165000,181000,196000"></span>
+	<span class="himn" data-number="20" data-title="A Dios, el Padre celestial" data-slides="2" data-times="10000"></span>
+	<span class="himn" data-number="431" data-title="A él mis problemas le doy" data-slides="5" data-times="20000,41000,69000,90000"></span>
+	<span class="himn" data-number="218" data-title="A Jesucristo ven sin tardar" data-slides="7" data-times="9000,30000,52000,73000,95000,116000"></span>
+	<span class="himn" data-number="236" data-title="A Jesús entrega todo" data-slides="5" data-times="14000,46000,79000,110000"></span>
+	<span class="himn" data-number="267" data-title="A la cruz de Cristo voy" data-slides="5" data-times="21000,44000,67000,90000"></span>
+	<span class="himn" data-number="377" data-title="A los pies de Jesucristo" data-slides="7" data-times="12000,38000,64000,91000,117000,144000"></span>
+	<span class="himn" data-number="86" data-title="A medianoche en Belén" data-slides="7" data-times="9000,28000,49000,69000,89000,109000"></span>
+	<span class="himn" data-number="16" data-title="A nuestro Padre Dios" data-slides="7" data-times="9000,24000,45000,60000,80000,96000"></span>
+	<span class="himn" data-number="382" data-title="A solas al huerto yo voy" data-slides="13" data-times="12000,24000,37000,49000,61000,72000,84000,96000,110000,123000,137000,149000"></span>
+	<span class="himn" data-number="5" data-title="A ti, glorioso Dios" data-slides="7" data-times="9000,33000,59000,84000,105000,130000"></span>
+	<span class="himn" data-number="152" data-title="A ti, Jesús" data-slides="3" data-times="12000,39000"></span>
+	<span class="himn" data-number="461" data-title="A tu lado anhelo estar" data-slides="11" data-times="24000,43000,50000,68000,74000,99000,117000,124000,148000,166000"></span>
+	<span class="himn" data-number="212" data-title="A tu puerta Cristo está" data-slides="7" data-times="9000,30000,52000,73000,94000,115000"></span>
+	<span class="himn" data-number="339" data-title="A veces oigo un himno" data-slides="10" data-times="24000,42000,59000,78000,95000,113000,131000,148000,166000"></span>
+	<span class="himn" data-number="30" data-title="Abre mis ojos" data-slides="3" data-times="13000,44000"></span>
+	<span class="himn" data-number="195" data-title="Abre mis ojos a la luz" data-slides="9" data-times="10000,31000,51000,72000,93000,114000,134000,155000"></span>
+	<span class="himn" data-number="230" data-title="Abre tu corazón" data-slides="3" data-times="14000,43000"></span>
+	<span class="himn" data-number="126" data-title="Abrigadas y salvas en el redil" data-slides="9" data-times="12000,36000,57000,80000,100000,124000,144000,168000"></span>
+	<span class="himn" data-number="520" data-title="¡Adelante! manda el Señor" data-slides="7" data-times="16000,33000,52000,69000,87000,104000"></span>
+	<span class="himn" data-number="43" data-title="Agua de vida" data-slides="3" data-times="9000,32000"></span>
+	<span class="himn" data-number="488" data-title="Al andar con Jesús" data-slides="13" data-times="13000,32000,43000,59000,73000,88000,104000,118000,132000,148000,162000,177000"></span>
+	<span class="himn" data-number="298" data-title="Al Calvario, solo, Jesús ascendió" data-slides="9" data-times="25000,50000,76000,89000,100000,127000,139000,151000"></span>
+	<span class="himn" data-number="185" data-title="Al cielo voy" data-slides="7" data-times="15000,37000,60000,83000,105000,128000"></span>
+	<span class="himn" data-number="96" data-title="Al contemplar la excelsa cruz" data-slides="5" data-times="8000,45000,81000,117000"></span>
+	<span class="himn" data-number="288" data-title="Al contemplarte, mi Salvador" data-slides="9" data-times="10000,36000,61000,87000,112000,137000,163000,189000"></span>
+	<span class="himn" data-number="521" data-title="Al Cristo ved" data-slides="10" data-times="18000,35000,53000,71000,89000,106000,124000,141000,159000"></span>
+	<span class="himn" data-number="13" data-title="Al Dios invisible" data-slides="9" data-times="12000,26000,40000,53000,68000,88000,96000,116000"></span>
+	<span class="himn" data-number="78" data-title="¡Al mundo paz!" data-slides="4" data-times="10000,38000,66000"></span>
+	<span class="himn" data-number="63" data-title="Al Rey adorad" data-slides="8" data-times="5000,35000,49000,65000,80000,95000,111000"></span>
+	<span class="himn" data-number="10" data-title="Alaba al Dios de Abraham" data-slides="7" data-times="9000,31000,53000,74000,96000,117000"></span>
+	<span class="himn" data-number="141" data-title="¡Alabadle!" data-slides="12" data-times="16000,32000,47000,62000,78000,94000,109000,124000,140000,164000,187000"></span>
+	<span class="himn" data-number="4" data-title="Alabanzas sin cesar" data-slides="7" data-times="10000,28000,47000,65000,84000,102000"></span>
+	<span class="himn" data-number="9" data-title="Alabemos al Señor" data-slides="3" data-times="9000,31000"></span>
+	<span class="himn" data-number="85" data-title="Allá en el pesebre" data-slides="7" data-times="8000,26000,44000,62000,81000,98000"></span>
+	<span class="himn" data-number="220" data-title="Allá la puerta abierta está" data-slides="7" data-times="10000,32000,56000,79000,103000,125000"></span>
+	<span class="himn" data-number="321" data-title="Allá sobre montes" data-slides="11" data-times="14000,39000,61000,79000,91000,103000,126000,142000,168000,190000"></span>
+	<span class="himn" data-number="11" data-title="Alma, bendice al Señor" data-slides="7" data-times="15000,37000,54000,75000,92000,113000"></span>
+	<span class="himn" data-number="558" data-title="Ama a tus prójimos" data-slides="11" data-times="11000,24000,37000,50000,64000,76000,90000,116000,129000,155000"></span>
+	<span class="himn" data-number="124" data-title="Ama el Pastor sus ovejas" data-slides="10" data-times="22000,45000,68000,92000,115000,138000,162000,186000,210000"></span>
+	<span class="himn" data-number="158" data-title="Amanece ya la mañana de oro" data-slides="9" data-times="9000,31000,53000,75000,98000,120000,142000,164000"></span>
+	<span class="himn" data-number="277" data-title="Amarte más" data-slides="9" data-times="10000,33000,57000,80000,103000,127000,150000,174000"></span>
+	<span class="himn" data-number="584" data-title="Amémonos, hermanos" data-slides="7" data-times="26000,52000,77000,103000,129000,154000"></span>
+	<span class="himn" data-number="108" data-title="Amigo fiel es Cristo" data-slides="9" data-times="18000,37000,56000,75000,94000,113000,132000,151000"></span>
+	<span class="himn" data-number="542" data-title="Amo tu sábado" data-slides="5" data-times="18000,51000,80000,112000"></span>
+	<span class="himn" data-number="113" data-title="Amor que no me dejarás" data-slides="5" data-times="11000,42000,75000,106000"></span>
+	<span class="himn" data-number="350" data-title="Andando en la luz de Dios" data-slides="13" data-times="23000,34000,44000,55000,66000,77000,88000,99000,109000,121000,133000,144000"></span>
+	<span class="himn" data-number="380" data-title="Ando con Cristo" data-slides="13" data-times="23000,35000,46000,59000,70000,83000,94000,105000,117000,131000,142000,152000"></span>
+	<span class="himn" data-number="92" data-title="Ángeles cantando están" data-slides="5" data-times="15000,35000,68000,87000"></span>
+	<span class="himn" data-number="254" data-title="Anhelo ser limpio" data-slides="13" data-times="14000,29000,44000,59000,75000,90000,105000,121000,136000,152000,167000,182000"></span>
+	<span class="himn" data-number="387" data-title="Aparte del mundo" data-slides="9" data-times="13000,29000,45000,60000,76000,92000,108000,125000"></span>
+	<span class="himn" data-number="26" data-title="Aquí reunidos" data-slides="7" data-times="7000,24000,40000,56000,73000,88000"></span>
+	<span class="himn" data-number="187" data-title="Aunque anochezca" data-slides="5" data-times="9000,48000,88000,127000"></span>
+	<span class="himn" data-number="333" data-title="Aunque en esta vida" data-slides="13" data-times="5000,21000,36000,51000,66000,82000,97000,112000,127000,143000,158000,173000"></span>
+	<span class="himn" data-number="50" data-title="Baja el sol" data-slides="13" data-times="9000,27000,45000,56000,68000,87000,104000,115000,128000,146000,163000,175000"></span>
+	<span class="himn" data-number="411" data-title="Bajo sus alas" data-slides="10" data-times="17000,34000,50000,82000,98000,114000,146000,163000,179000"></span>
+	<span class="himn" data-number="200" data-title="Bautízanos hoy" data-slides="7" data-times="13000,29000,44000,59000,75000,89000"></span>
+	<span class="himn" data-number="604" data-title="Bellas las manitas son" data-slides="9" data-times="10000,29000,49000,67000,86000,105000,124000,143000"></span>
+	<span class="himn" data-number="131" data-title="Bendito es el nombre de Jesús" data-slides="5" data-times="8000,46000,83000,121000"></span>
+	<span class="himn" data-number="217" data-title="Bienvenida da Jesús" data-slides="7" data-times="21000,38000,63000,81000,105000,124000"></span>
+	<span class="himn" data-number="502" data-title="Brilla en el sitio donde estés" data-slides="13" data-times="8000,19000,30000,40000,51000,61000,72000,82000,93000,102000,114000,124000"></span>
+	<span class="himn" data-number="282" data-title="¡Brilla, Jesús!" data-slides="9" data-times="9000,25000,39000,60000,81000,98000,112000,132000"></span>
+	<span class="himn" data-number="484" data-title="Busca al Señor" data-slides="7" data-times="19000,40000,62000,83000,105000,126000"></span>
+	<span class="himn" data-number="226" data-title="Buscad primero" data-slides="7" data-times="11000,25000,41000,55000,71000,85000"></span>
+	<span class="himn" data-number="322" data-title="Busquemos la patria" data-slides="8" data-times="10000,35000,46000,59000,71000,84000,96000"></span>
+	<span class="himn" data-number="101" data-title="Cabeza sacrosanta" data-slides="7" data-times="9000,33000,56000,80000,104000,128000"></span>
+	<span class="himn" data-number="71" data-title="Cada cosa hermosa" data-slides="10" data-times="19000,39000,59000,79000,100000,120000,140000,161000,182000"></span>
+	<span class="himn" data-number="201" data-title="Canción del Espíritu" data-slides="7" data-times="7000,29000,51000,92000,114000,137000"></span>
+	<span class="himn" data-number="345" data-title="Canta y tus penas se irán" data-slides="4" data-times="8000,28000,46000"></span>
+	<span class="himn" data-number="1" data-title="Cantad alegres al Señor" data-slides="4" data-times="24000,62000,98000"></span>
+	<span class="himn" data-number="107" data-title="Canto el gran amor" data-slides="9" data-times="11000,33000,56000,77000,99000,121000,143000,165000"></span>
+	<span class="himn" data-number="421" data-title="Cariñoso Salvador" data-slides="7" data-times="9000,29000,52000,72000,95000,115000"></span>
+	<span class="himn" data-number="400" data-title="Castillo fuerte es nuestro Dios" data-slides="9" data-times="9000,40000,72000,102000,134000,164000,196000,227000"></span>
+	<span class="himn" data-number="566" data-title="Centinelas del Maestro" data-slides="7" data-times="40000,61000,82000,102000,123000,143000"></span>
+	<span class="himn" data-number="494" data-title="Cerca un alma agobiada está" data-slides="15" data-times="14000,33000,41000,52000,70000,79000,89000,98000,107000,116000,126000,135000,144000,153000"></span>
+	<span class="himn" data-number="451" data-title="Cerca, más cerca" data-slides="9" data-times="23000,58000,82000,116000,140000,175000,199000,234000"></span>
+	<span class="himn" data-number="372" data-title="¿Cómo agradecer?" data-slides="8" data-times="8000,37000,50000,65000,92000,119000,148000"></span>
+	<span class="himn" data-number="432" data-title="Como el ciervo" data-slides="7" data-times="25000,51000,78000,104000,131000,156000"></span>
+	<span class="himn" data-number="111" data-title="Como Jesús no hay otro amigo" data-slides="7" data-times="24000,47000,70000,93000,116000,138000"></span>
+	<span class="himn" data-number="456" data-title="Como la mujer de junto al pozo" data-slides="13" data-times="10000,27000,32000,48000,54000,65000,75000,91000,97000,107000,117000,133000"></span>
+	<span class="himn" data-number="424" data-title="¿Cómo podré estar triste?" data-slides="13" data-times="16000,37000,53000,70000,90000,111000,128000,145000,165000,187000,203000,220000"></span>
+	<span class="himn" data-number="453" data-title="Cómo ser cual Cristo" data-slides="7" data-times="13000,37000,62000,87000,112000,137000"></span>
+	<span class="himn" data-number="296" data-title="Comprado con sangre por Cristo" data-slides="10" data-times="16000,24000,32000,50000,66000,84000,100000,118000,134000"></span>
+	<span class="himn" data-number="145" data-title="Con acentos de alegría" data-slides="10" data-times="9000,29000,48000,69000,88000,107000,127000,147000,165000"></span>
+	<span class="himn" data-number="554" data-title="Con Cristo avanza hoy" data-slides="7" data-times="18000,40000,57000,79000,96000,118000"></span>
+	<span class="himn" data-number="347" data-title="Con gozo canto al Señor" data-slides="9" data-times="10000,39000,57000,80000,102000,126000,149000,172000"></span>
+	<span class="himn" data-number="525" data-title="Con gratitud, llegamos" data-slides="4" data-times="7000,29000,51000"></span>
+	<span class="himn" data-number="276" data-title="Con nuestras mentes" data-slides="7" data-times="5000,29000,53000,76000,100000,124000"></span>
+	<span class="himn" data-number="362" data-title="Con sin igual amor" data-slides="7" data-times="17000,42000,68000,93000,119000,143000"></span>
+	<span class="himn" data-number="215" data-title="Con voz benigna te llama Jesús" data-slides="9" data-times="8000,26000,45000,63000,82000,92000,100000"></span>
+	<span class="himn" data-number="471" data-title="Condúceme, Maestro" data-slides="7" data-times="12000,33000,54000,74000,96000,116000"></span>
+	<span class="himn" data-number="285" data-title="Confío en Jesucristo" data-slides="7" data-times="18000,39000,59000,80000,100000,121000"></span>
+	<span class="himn" data-number="433" data-title="Conmigo marcha un ángel" data-slides="9" data-times="13000,40000,65000,90000,117000,143000,169000,193000"></span>
+	<span class="himn" data-number="178" data-title="Contemplé la gloria" data-slides="10" data-times="9000,21000,31000,51000,63000,73000,94000,105000,115000"></span>
+	<span class="himn" data-number="508" data-title="Contendamos siempre por nuestra fe" data-slides="8" data-times="30000,42000,53000,77000,99000,123000,145000"></span>
+	<span class="himn" data-number="452" data-title="Contigo quiero andar" data-slides="7" data-times="19000,40000,62000,89000,103000,117000"></span>
+	<span class="himn" data-number="389" data-title="Conversar con Jesucristo" data-slides="3" data-times="11000,37000"></span>
+	<span class="himn" data-number="608" data-title="Corazones siempre alegres" data-slides="9" data-times="17000,35000,55000,73000,91000,108000,128000,145000"></span>
+	<span class="himn" data-number="102" data-title="Cordero de Dios" data-slides="7" data-times="13000,38000,63000,88000,113000,138000"></span>
+	<span class="himn" data-number="89" data-title="Cristianos alegraos hoy" data-slides="7" data-times="6000,23000,39000,56000,73000,90000"></span>
+	<span class="himn" data-number="110" data-title="Cristo es el mejor amigo" data-slides="9" data-times="14000,37000,61000,85000,110000,133000,157000,182000"></span>
+	<span class="himn" data-number="301" data-title="Cristo es mi amante Salvador" data-slides="10" data-times="9000,30000,42000,52000,74000,97000,118000,140000,162000"></span>
+	<span class="himn" data-number="116" data-title="Cristo está a mi lado" data-slides="7" data-times="10000,39000,68000,96000,125000,155000"></span>
+	<span class="himn" data-number="560" data-title="Cristo está buscando obreros" data-slides="9" data-times="10000,34000,59000,82000,107000,131000,155000,178000"></span>
+	<span class="himn" data-number="105" data-title="Cristo ha resucitado" data-slides="5" data-times="5000,44000,82000,120000"></span>
+	<span class="himn" data-number="408" data-title="Cristo me ayuda por él a vivir" data-slides="12" data-times="19000,50000,80000,95000,110000,141000,156000,171000,202000,217000,232000"></span>
+	<span class="himn" data-number="189" data-title="Cristo muy pronto vendrá" data-slides="3" data-times="8000,28000"></span>
+	<span class="himn" data-number="179" data-title="¡Cristo viene! Aquel día se acerca" data-slides="7" data-times="15000,37000,54000,76000,92000,114000"></span>
+	<span class="himn" data-number="163" data-title="Cristo viene, esto es cierto" data-slides="9" data-times="7000,24000,49000,66000,91000,108000,134000,151000"></span>
+	<span class="himn" data-number="310" data-title="Cristo, centro de mi vida" data-slides="7" data-times="8000,26000,44000,62000,81000,98000"></span>
+	<span class="himn" data-number="130" data-title="Cristo, Cristo, Cristo" data-slides="3" data-times="14000,49000"></span>
+	<span class="himn" data-number="487" data-title="Cristo, eres justo Rey" data-slides="7" data-times="18000,49000,63000,86000,107000,137000"></span>
+	<span class="himn" data-number="449" data-title="Cristo, mi piloto sé" data-slides="7" data-times="9000,31000,53000,74000,96000,118000"></span>
+	<span class="himn" data-number="127" data-title="Cristo, nombre dulce" data-slides="7" data-times="25000,37000,52000,70000,79000,98000"></span>
+	<span class="himn" data-number="135" data-title="Cristo, nombre sublime" data-slides="2" data-times="15000"></span>
+	<span class="himn" data-number="314" data-title="Cristo, Rey Omnipotente" data-slides="7" data-times="8000,29000,44000,64000,80000,100000"></span>
+	<span class="himn" data-number="49" data-title="Cristo, ya la noche cierra" data-slides="5" data-times="11000,37000,65000,91000"></span>
+	<span class="himn" data-number="598" data-title="Cristo, yo te seguiré" data-slides="7" data-times="13000,28000,42000,56000,70000,85000"></span>
+	<span class="himn" data-number="129" data-title="Cual Jesús no hay otro nombre" data-slides="13" data-times="10000,31000,42000,53000,74000,85000,96000,116000,127000,138000,159000,170000"></span>
+	<span class="himn" data-number="134" data-title="Cual mirra fragante" data-slides="10" data-times="11000,30000,51000,71000,90000,110000,129000,148000,169000"></span>
+	<span class="himn" data-number="533" data-title="Cuán bueno y agradable" data-slides="3" data-times="9000,32000"></span>
+	<span class="himn" data-number="394" data-title="¡Cuán firme cimiento!" data-slides="10" data-times="9000,27000,55000,72000,100000,117000,135000,145000,171000"></span>
+	<span class="himn" data-number="483" data-title="Cuando al cielo lleguemos" data-slides="7" data-times="8000,27000,47000,65000,85000,104000"></span>
+	<span class="himn" data-number="403" data-title="Cuando en la lucha" data-slides="8" data-times="12000,29000,44000,75000,106000,137000,169000"></span>
+	<span class="himn" data-number="118" data-title="Cuando estés cansado y abatido" data-slides="9" data-times="9000,29000,49000,70000,90000,110000,130000,151000"></span>
+	<span class="himn" data-number="311" data-title="Cuando junte Jesús las naciones" data-slides="13" data-times="17000,28000,38000,48000,59000,69000,79000,89000,100000,109000,120000,130000"></span>
+	<span class="himn" data-number="601" data-title="Cuando leo en la Biblia" data-slides="9" data-times="11000,25000,38000,51000,64000,77000,90000,103000"></span>
+	<span class="himn" data-number="319" data-title="Cuando mi lucha termine al final" data-slides="7" data-times="14000,41000,71000,97000,126000,153000"></span>
+	<span class="himn" data-number="398" data-title="Cuando sopla airada la tempestad" data-slides="8" data-times="10000,34000,57000,81000,104000,116000,128000"></span>
+	<span class="himn" data-number="169" data-title="Cuando suene la trompeta" data-slides="10" data-times="29000,40000,51000,76000,88000,98000,128000,141000,152000"></span>
+	<span class="himn" data-number="410" data-title="Cuando te quiero" data-slides="9" data-times="15000,41000,59000,85000,104000,131000,149000,175000"></span>
+	<span class="himn" data-number="600" data-title="Cuando venga Jesucristo" data-slides="9" data-times="31000,51000,71000,91000,111000,131000,151000,171000"></span>
+	<span class="himn" data-number="334" data-title="Cuánto anhelo llegar" data-slides="8" data-times="23000,35000,47000,73000,97000,123000,147000"></span>
+	<span class="himn" data-number="120" data-title="¡Cuánto me alegra!" data-slides="7" data-times="19000,38000,58000,77000,96000,116000"></span>
+	<span class="himn" data-number="123" data-title="¡Cuánto nos ama Jesús!" data-slides="3" data-times="15000,57000"></span>
+	<span class="himn" data-number="245" data-title="Cúmplase, oh Cristo, tu voluntad" data-slides="5" data-times="12000,40000,68000,96000"></span>
+	<span class="himn" data-number="2" data-title="Da gloria al Señor" data-slides="9" data-times="16000,32000,50000,66000,85000,100000,119000,135000"></span>
+	<span class="himn" data-number="154" data-title="Dad gloria al Cordero Rey" data-slides="9" data-times="9000,23000,41000,55000,73000,87000,105000,119000"></span>
+	<span class="himn" data-number="205" data-title="Dadme la Biblia" data-slides="10" data-times="9000,31000,52000,74000,95000,116000,138000,159000"></span>
+	<span class="himn" data-number="462" data-title="Dame a Cristo" data-slides="5" data-times="28000,59000,89000,118000"></span>
+	<span class="himn" data-number="417" data-title="Dame la fe de mi Jesús" data-slides="9" data-times="15000,35000,57000,77000,99000,119000,138000,159000"></span>
+	<span class="himn" data-number="202" data-title="Danos el fuego" data-slides="5" data-times="22000,54000,86000,119000"></span>
+	<span class="himn" data-number="239" data-title="De Dios vagaba lejos yo" data-slides="9" data-times="11000,33000,56000,78000,101000,124000,145000,167000"></span>
+	<span class="himn" data-number="272" data-title="De esclavitud" data-slides="9" data-times="9000,31000,53000,75000,97000,118000,141000,162000"></span>
+	<span class="himn" data-number="137" data-title="De Jesús el nombre invoca" data-slides="7" data-times="22000,45000,69000,92000,116000,139000"></span>
+	<span class="himn" data-number="479" data-title="De la mano, Señor" data-slides="5" data-times="22000,45000,68000,91000"></span>
+	<span class="himn" data-number="381" data-title="De mañana veo su faz" data-slides="2" data-times="11000"></span>
+	<span class="himn" data-number="138" data-title="De mi amante Salvador" data-slides="17" data-times="11000,22000,34000,45000,57000,69000,81000,91000,104000,116000,127000,138000,151000,163000,174000,185000"></span>
+	<span class="himn" data-number="506" data-title="¡De pie, de pie, cristianos!" data-slides="9" data-times="18000,39000,59000,80000,100000,121000,141000,162000"></span>
+	<span class="himn" data-number="517" data-title="De pie, oh grey de Dios" data-slides="5" data-times="9000,31000,53000,75000"></span>
+	<span class="himn" data-number="585" data-title="De rodillas partimos hoy el pan" data-slides="7" data-times="27000,53000,78000,103000,128000,153000"></span>
+	<span class="himn" data-number="119" data-title="De su trono, mi Jesús" data-slides="7" data-times="8000,26000,44000,62000,80000,97000"></span>
+	<span class="himn" data-number="56" data-title="De tal manera amó" data-slides="2" data-times="14000"></span>
+	<span class="himn" data-number="388" data-title="Debo decir a Cristo" data-slides="13" data-times="11000,24000,37000,51000,64000,77000,90000,103000,116000,129000,143000,156000"></span>
+	<span class="himn" data-number="252" data-title="Dejo el mundo" data-slides="9" data-times="8000,29000,50000,71000,92000,113000,134000,154000"></span>
+	<span class="himn" data-number="336" data-title="Del bello país he leído" data-slides="11" data-times="10000,31000,53000,75000,92000,108000,118000,140000,162000,184000"></span>
+	<span class="himn" data-number="29" data-title="Del culto el tiempo llega" data-slides="7" data-times="13000,36000,59000,82000,106000,129000"></span>
+	<span class="himn" data-number="222" data-title="Del trono celestial" data-slides="9" data-times="24000,46000,70000,92000,116000,138000,162000,184000"></span>
+	<span class="himn" data-number="198" data-title="Desciende, Espíritu de amor" data-slides="5" data-times="14000,43000,72000,100000"></span>
+	<span class="himn" data-number="514" data-title="¡Despertad, despertad, oh cristianos!" data-slides="9" data-times="9000,31000,53000,75000,97000,119000,141000,164000"></span>
+	<span class="himn" data-number="39" data-title="Despide hoy tu grey" data-slides="3" data-times="8000,27000"></span>
+	<span class="himn" data-number="44" data-title="Despídenos con tu bendición" data-slides="3" data-times="6000,20000"></span>
+	<span class="himn" data-number="519" data-title="Despierta, hermano, sin demorar" data-slides="4" data-times="12000,38000,65000"></span>
+	<span class="himn" data-number="515" data-title="Despliegue el cristiano su santa bandera" data-slides="9" data-times="8000,20000,32000,43000,54000,66000,78000,89000"></span>
+	<span class="himn" data-number="342" data-title="Después del río" data-slides="13" data-times="17000,34000,50000,66000,82000,98000,117000,135000,151000,167000,183000,199000"></span>
+	<span class="himn" data-number="45" data-title="Después, Señor" data-slides="7" data-times="8000,26000,46000,64000,83000,101000"></span>
+	<span class="himn" data-number="425" data-title="Día en día" data-slides="9" data-times="13000,32000,51000,67000,86000,99000,120000,146000"></span>
+	<span class="himn" data-number="312" data-title="Día grande viene" data-slides="13" data-times="7000,17000,27000,37000,47000,59000,67000,77000,86000,99000,106000,117000"></span>
+	<span class="himn" data-number="550" data-title="Día santo del Señor" data-slides="7" data-times="8000,28000,48000,68000,87000,107000"></span>
+	<span class="himn" data-number="348" data-title="Dicha grande" data-slides="10" data-times="9000,29000,49000,68000,88000,97000,112000,128000,148000"></span>
+	<span class="himn" data-number="143" data-title="Digno eres tú" data-slides="7" data-times="14000,29000,44000,75000,91000,104000"></span>
+	<span class="himn" data-number="480" data-title="Digno eres, oh Señor" data-slides="10" data-times="12000,25000,39000,66000,80000,93000,121000,134000,148000"></span>
+	<span class="himn" data-number="114" data-title="Dime la antigua historia" data-slides="10" data-times="10000,32000,54000,77000,99000,121000,144000,166000,188000"></span>
+	<span class="himn" data-number="216" data-title="Dios al pródigo llama" data-slides="10" data-times="12000,26000,40000,67000,82000,95000,123000,137000,150000"></span>
+	<span class="himn" data-number="308" data-title="Dios descendió" data-slides="15" data-times="8000,24000,38000,48000,68000,89000,109000,130000,149000,170000,180000,196000,210000,228000"></span>
+	<span class="himn" data-number="193" data-title="Dios nos ha dado promesa" data-slides="9" data-times="13000,31000,49000,67000,85000,103000,122000,140000"></span>
+	<span class="himn" data-number="207" data-title="Dios nos habla" data-slides="7" data-times="6000,33000,61000,88000,116000,145000"></span>
+	<span class="himn" data-number="37" data-title="Dios os guarde" data-slides="9" data-times="11000,35000,59000,83000,107000,131000,155000,179000"></span>
+	<span class="himn" data-number="435" data-title="Dios sabe, Dios oye, Dios ve" data-slides="7" data-times="14000,46000,76000,107000,137000,166000"></span>
+	<span class="himn" data-number="122" data-title="Divino pastor" data-slides="7" data-times="11000,37000,62000,88000,114000,140000"></span>
+	<span class="himn" data-number="374" data-title="Dulce comunión" data-slides="10" data-times="9000,21000,32000,54000,65000,76000,98000,109000,120000"></span>
+	<span class="himn" data-number="197" data-title="Dulce Espíritu" data-slides="4" data-times="10000,62000,88000"></span>
+	<span class="himn" data-number="376" data-title="Dulce oración" data-slides="10" data-times="12000,26000,46000,67000,81000,102000,124000,138000,159000"></span>
+	<span class="himn" data-number="132" data-title="Dulce, hermoso nombre es Jesús" data-slides="8" data-times="13000,43000,72000,102000,130000,160000"></span>
+	<span class="himn" data-number="100" data-title="¡Dulces momentos!" data-slides="5" data-times="8000,48000,87000,126000"></span>
+	<span class="himn" data-number="596" data-title="Edificamos familias" data-slides="9" data-times="8000,21000,32000,56000,69000,81000,104000,129000"></span>
+	<span class="himn" data-number="475" data-title="El camino es escabroso" data-slides="13" data-times="18000,33000,45000,60000,74000,88000,100000,114000,128000,142000,154000,168000"></span>
+	<span class="himn" data-number="384" data-title="El jardín de oración" data-slides="17" data-times="21000,35000,49000,63000,77000,91000,104000,118000,132000,146000,160000,173000,187000,201000,215000,229000"></span>
+	<span class="himn" data-number="315" data-title="El Juicio empezó" data-slides="13" data-times="13000,28000,41000,61000,69000,83000,96000,117000,124000,139000,152000,172000"></span>
+	<span class="himn" data-number="65" data-title="El mundo es de mi Dios" data-slides="7" data-times="14000,36000,59000,82000,105000,128000"></span>
+	<span class="himn" data-number="581" data-title="El pan de vida soy" data-slides="6" data-times="24000,46000,68000,91000,115000"></span>
+	<span class="himn" data-number="578" data-title="El pueblo que conoce a su Dios" data-slides="7" data-times="20000,42000,58000,75000,97000,113000"></span>
+	<span class="himn" data-number="429" data-title="Él puede" data-slides="5" data-times="9000,20000,30000,42000"></span>
+	<span class="himn" data-number="168" data-title="El Rey que viene" data-slides="9" data-times="10000,33000,55000,78000,100000,123000,145000,169000"></span>
+	<span class="himn" data-number="436" data-title="Él vive hoy" data-slides="9" data-times="8000,31000,53000,75000,97000,130000,141000,163000"></span>
+	<span class="himn" data-number="365" data-title="Elevemos al Señor" data-slides="7" data-times="13000,34000,57000,79000,102000,124000"></span>
+	<span class="himn" data-number="551" data-title="Embajador soy de mi Rey" data-slides="10" data-times="11000,24000,36000,61000,75000,86000,111000,125000,136000"></span>
+	<span class="himn" data-number="366" data-title="En Cristo hallo amigo" data-slides="12" data-times="13000,25000,36000,47000,58000,70000,81000,92000,110000,122000,139000"></span>
+	<span class="himn" data-number="317" data-title="En el hogar do nunca habrá" data-slides="7" data-times="9000,33000,56000,79000,102000,125000"></span>
+	<span class="himn" data-number="97" data-title="En el monte Calvario" data-slides="9" data-times="14000,45000,76000,108000,139000,171000,202000,234000"></span>
+	<span class="himn" data-number="358" data-title="En el seno de mi alma" data-slides="12" data-times="12000,27000,41000,70000,84000,98000,127000,154000,181000,193000,207000"></span>
+	<span class="himn" data-number="599" data-title="En este bello día" data-slides="9" data-times="16000,34000,53000,70000,89000,106000,125000,142000"></span>
+	<span class="himn" data-number="399" data-title="En estos tiempos" data-slides="10" data-times="20000,44000,56000,68000,93000,104000,117000,141000,152000"></span>
+	<span class="himn" data-number="360" data-title="En Jesucristo, mártir de paz" data-slides="7" data-times="12000,39000,66000,94000,120000,148000"></span>
+	<span class="himn" data-number="294" data-title="En Jesús por fe confío" data-slides="10" data-times="8000,26000,43000,52000,70000,83000,96000,115000,128000"></span>
+	<span class="himn" data-number="329" data-title="En la célica morada" data-slides="7" data-times="8000,28000,47000,70000,91000,110000"></span>
+	<span class="himn" data-number="318" data-title="En la mansión de mi Señor" data-slides="9" data-times="10000,31000,53000,74000,95000,116000,137000,158000"></span>
+	<span class="himn" data-number="332" data-title="En la tierra adonde iré" data-slides="7" data-times="9000,30000,51000,72000,93000,113000"></span>
+	<span class="himn" data-number="486" data-title="En los pasos de Jesús" data-slides="5" data-times="8000,28000,48000,68000"></span>
+	<span class="himn" data-number="586" data-title="En memoria de mí" data-slides="6" data-times="10000,48000,76000,106000,135000"></span>
+	<span class="himn" data-number="34" data-title="En momentos así" data-slides="4" data-times="13000,29000,43000"></span>
+	<span class="himn" data-number="162" data-title="En presencia estar de Cristo" data-slides="9" data-times="27000,52000,82000,107000,137000,162000,192000,218000"></span>
+	<span class="himn" data-number="155" data-title="En Sion Jesús hoy reina" data-slides="7" data-times="16000,38000,60000,82000,104000,126000"></span>
+	<span class="himn" data-number="536" data-title="En sombras de la tarde" data-slides="7" data-times="8000,31000,54000,76000,98000,121000"></span>
+	<span class="himn" data-number="534" data-title="En tu nombre comenzamos" data-slides="7" data-times="13000,33000,52000,71000,94000,116000"></span>
+	<span class="himn" data-number="14" data-title="Engrandecido sea Dios" data-slides="9" data-times="11000,25000,42000,57000,73000,87000,104000,118000"></span>
+	<span class="himn" data-number="344" data-title="Entonad un himno" data-slides="13" data-times="11000,23000,34000,59000,71000,83000,108000,120000,132000,156000,168000,180000"></span>
+	<span class="himn" data-number="263" data-title="Entra en este corazón" data-slides="7" data-times="8000,32000,47000,66000,86000,105000"></span>
+	<span class="himn" data-number="232" data-title="Entrégate en oración" data-slides="3" data-times="12000,26000"></span>
+	<span class="himn" data-number="243" data-title="Entrego todo a Cristo" data-slides="5" data-times="20000,56000,93000,130000"></span>
+	<span class="himn" data-number="602" data-title="Es el amor divino" data-slides="10" data-times="18000,34000,49000,65000,81000,96000,113000,130000,145000"></span>
+	<span class="himn" data-number="121" data-title="Es Jesucristo la vida, la luz" data-slides="7" data-times="17000,43000,69000,94000,125000,155000"></span>
+	<span class="himn" data-number="563" data-title="Escuchad, Jesús nos dice" data-slides="7" data-times="9000,31000,53000,75000,98000,119000"></span>
+	<span class="himn" data-number="610" data-title="Escuchamos tu llamada" data-slides="13" data-times="17000,36000,53000,72000,91000,108000,126000,145000,162000,181000,200000,217000"></span>
+	<span class="himn" data-number="562" data-title="Esparcid la luz de Cristo" data-slides="7" data-times="7000,26000,45000,63000,82000,100000"></span>
+	<span class="himn" data-number="401" data-title="Eterna Roca es mi Jesús" data-slides="7" data-times="10000,34000,57000,80000,104000,127000"></span>
+	<span class="himn" data-number="76" data-title="Eterno Dios, mi Creador" data-slides="5" data-times="10000,31000,54000,77000"></span>
+	<span class="himn" data-number="346" data-title="¡Feliz el día!" data-slides="10" data-times="9000,31000,46000,62000,84000,100000,116000,137000,152000"></span>
+	<span class="himn" data-number="595" data-title="Feliz hogar" data-slides="6" data-times="24000,48000,73000,97000,121000"></span>
+	<span class="himn" data-number="211" data-title="Fija tus ojos en Cristo" data-slides="7" data-times="23000,56000,89000,122000,155000,188000"></span>
+	<span class="himn" data-number="509" data-title="¡Firmes! ¡Fuertes!" data-slides="7" data-times="11000,33000,56000,79000,101000,124000"></span>
+	<span class="himn" data-number="516" data-title="¡Firmes y adelante!" data-slides="13" data-times="15000,36000,56000,79000,100000,120000,143000,164000,184000,207000,228000,248000"></span>
+	<span class="himn" data-number="72" data-title="Fue un milagro" data-slides="10" data-times="8000,27000,45000,65000,84000,102000,121000,141000,159000"></span>
+	<span class="himn" data-number="290" data-title="Fuente de la vida eterna" data-slides="7" data-times="10000,32000,53000,75000,96000,118000"></span>
+	<span class="himn" data-number="21" data-title="Gloria sea al Padre" data-slides="3" data-times="9000,25000"></span>
+	<span class="himn" data-number="352" data-title="Gozaos, Cristo es Rey" data-slides="9" data-times="9000,32000,48000,71000,87000,109000,126000,148000"></span>
+	<span class="himn" data-number="356" data-title="Gozo es conocer a Cristo" data-slides="5" data-times="5000,22000,38000,54000"></span>
+	<span class="himn" data-number="41" data-title="Gracia, amor y comunión" data-slides="4" data-times="20000,41000,61000"></span>
+	<span class="himn" data-number="367" data-title="Gracias, Dios" data-slides="2" data-times="5000"></span>
+	<span class="himn" data-number="188" data-title="Gran alegría" data-slides="11" data-times="9000,20000,30000,46000,70000,81000,91000,111000,131000,141000"></span>
+	<span class="himn" data-number="349" data-title="Gran gozo hay en mi alma hoy" data-slides="9" data-times="9000,29000,50000,71000,92000,113000,133000,154000"></span>
+	<span class="himn" data-number="58" data-title="Grande es el amor divino" data-slides="9" data-times="8000,31000,43000,67000,79000,103000,116000,139000"></span>
+	<span class="himn" data-number="75" data-title="Grande es Jehová" data-slides="7" data-times="22000,34000,46000,67000,79000,91000"></span>
+	<span class="himn" data-number="55" data-title="Grande, Señor, es tu misericordia" data-slides="7" data-times="14000,44000,75000,105000,137000,167000"></span>
+	<span class="himn" data-number="369" data-title="Gratitud y alabanza" data-slides="2" data-times="8000"></span>
+	<span class="himn" data-number="302" data-title="Grato es contar la historia" data-slides="13" data-times="25000,46000,66000,88000,108000,129000,149000,170000,191000,211000,232000,253000"></span>
+	<span class="himn" data-number="590" data-title="Guía a ti, Señor" data-slides="12" data-times="15000,39000,50000,61000,83000,95000,105000,139000,149000,172000,184000"></span>
+	<span class="himn" data-number="470" data-title="Guíame, Dios" data-slides="3" data-times="11000,42000"></span>
+	<span class="himn" data-number="466" data-title="Guíame, ¡oh Salvador!" data-slides="7" data-times="21000,45000,68000,91000,115000,138000"></span>
+	<span class="himn" data-number="383" data-title="Habla a tu Dios de mañana" data-slides="4" data-times="8000,30000,51000"></span>
+	<span class="himn" data-number="379" data-title="Habla, Señor, a mi alma" data-slides="13" data-times="15000,33000,50000,68000,85000,103000,120000,137000,154000,172000,189000,206000"></span>
+	<span class="himn" data-number="459" data-title="Háblame más de Cristo" data-slides="9" data-times="11000,23000,35000,60000,84000,109000,121000,133000"></span>
+	<span class="himn" data-number="473" data-title="Háblame, y hablaré" data-slides="2" data-times="9000,33000,55000"></span>
+	<span class="himn" data-number="385" data-title="Hablando con Jesús" data-slides="3" data-times="8000,20000"></span>
+	<span class="himn" data-number="186" data-title="Hace años escuché" data-slides="7" data-times="37000,56000,75000,113000,133000,152000"></span>
+	<span class="himn" data-number="171" data-title="¿Has oído el mensaje?" data-slides="17" data-times="12000,24000,35000,52000,70000,82000,93000,110000,129000,140000,151000,168000,187000,199000,210000,227000"></span>
+	<span class="himn" data-number="229" data-title="¿Has pensado lo que puede costar?" data-slides="13" data-times="7000,23000,40000,57000,74000,90000,107000,123000,141000,157000,174000,191000"></span>
+	<span class="himn" data-number="568" data-title="Hay lugar en la amplia viña" data-slides="13" data-times="19000,39000,60000,80000,101000,122000,142000,162000,183000,204000,225000,245000"></span>
+	<span class="himn" data-number="392" data-title="Hay quien vela mis pisadas" data-slides="10" data-times="8000,30000,51000,73000,94000,116000,137000,159000,180000"></span>
+	<span class="himn" data-number="363" data-title="Hay un canto nuevo en mi ser" data-slides="9" data-times="8000,29000,49000,70000,90000,110000,130000,151000"></span>
+	<span class="himn" data-number="330" data-title="Hay un feliz Edén" data-slides="7" data-times="18000,32000,45000,59000,72000,86000"></span>
+	<span class="himn" data-number="386" data-title="Hay un lugar de paz" data-slides="5" data-times="25000,48000,77000,99000"></span>
+	<span class="himn" data-number="443" data-title="Hay un lugar do quiero estar, cerca de ti" data-slides="7" data-times="24000,48000,72000,96000,120000,144000"></span>
+	<span class="himn" data-number="316" data-title="Hay un mundo feliz más allá" data-slides="7" data-times="12000,35000,57000,80000,102000,125000"></span>
+	<span class="himn" data-number="286" data-title="Hay una fuente sin igual" data-slides="10" data-times="8000,30000,51000,79000,95000,112000,127000,138000,160000"></span>
+	<span class="himn" data-number="299" data-title="Hay vida en mirar" data-slides="8" data-times="10000,34000,58000,82000,105000,118000,130000"></span>
+	<span class="himn" data-number="500" data-title="Hazme tu siervo" data-slides="3" data-times="6000,30000"></span>
+	<span class="himn" data-number="323" data-title="He de conocerle entonces" data-slides="13" data-times="12000,25000,38000,65000,78000,92000,118000,131000,144000,171000,184000,197000"></span>
+	<span class="himn" data-number="281" data-title="He decidido seguir a Cristo" data-slides="4" data-times="8000,30000,52000"></span>
+	<span class="himn" data-number="505" data-title="Hijo del reino" data-slides="8" data-times="12000,24000,37000,49000,61000,73000,85000"></span>
+	<span class="himn" data-number="74" data-title="Himno al Creador" data-slides="7" data-times="13000,34000,48000,69000,90000,104000"></span>
+	<span class="himn" data-number="593" data-title="Hogar de mis recuerdos" data-slides="13" data-times="25000,46000,67000,87000,109000,129000,153000,176000,197000,214000,235000,256000"></span>
+	<span class="himn" data-number="513" data-title="Honra al hombre de valor" data-slides="7" data-times="24000,38000,51000,64000,77000,91000"></span>
+	<span class="himn" data-number="6" data-title="¡Hosanna!" data-slides="5" data-times="6000,24000,41000,58000"></span>
+	<span class="himn" data-number="46" data-title="Hoy amanece" data-slides="5" data-times="15000,33000,49000,85000"></span>
+	<span class="himn" data-number="544" data-title="Hoy el sábado glorioso" data-slides="4" data-times="9000,31000,53000"></span>
+	<span class="himn" data-number="538" data-title="Hoy es día de reposo" data-slides="7" data-times="8000,30000,51000,73000,94000,116000"></span>
+	<span class="himn" data-number="555" data-title="Hoy gozoso medito" data-slides="11" data-times="9000,32000,44000,57000,69000,81000,92000,106000,129000,140000"></span>
+	<span class="himn" data-number="271" data-title="Hoy me llama el mundo en vano" data-slides="7" data-times="9000,29000,48000,67000,87000,106000"></span>
+	<span class="himn" data-number="613" data-title="Hoy nos toca trabajar" data-slides="13" data-times="17000,37000,56000,71000,85000,105000,124000,139000,153000,173000,191000,207000"></span>
+	<span class="himn" data-number="493" data-title="Hoy quiero trabajar contigo" data-slides="7" data-times="9000,27000,46000,65000,83000,103000"></span>
+	<span class="himn" data-number="582" data-title="Hoy venimos cual hermanos" data-slides="5" data-times="11000,34000,56000,78000"></span>
+	<span class="himn" data-number="93" data-title="Hubo Uno que quiso" data-slides="7" data-times="10000,34000,58000,81000,105000,128000"></span>
+	<span class="himn" data-number="275" data-title="Humilde oración" data-slides="3" data-times="10000,35000"></span>
+	<span class="himn" data-number="210" data-title="Huye cual ave" data-slides="7" data-times="14000,44000,66000,82000,111000,133000"></span>
+	<span class="himn" data-number="569" data-title="Id y predicad el evangelio" data-slides="16" data-times="8000,19000,29000,43000,58000,68000,78000,88000,102000,117000,127000,137000,147000,161000,176000"></span>
+	<span class="himn" data-number="529" data-title="Iglesia de Cristo" data-slides="7" data-times="13000,30000,46000,61000,77000,92000"></span>
+	<span class="himn" data-number="24" data-title="Imploramos tu presencia" data-slides="4" data-times="11000,37000,64000"></span>
+	<span class="himn" data-number="125" data-title="Infinito amor de Cristo" data-slides="4" data-times="9000,30000,52000"></span>
+	<span class="himn" data-number="99" data-title="Jamás podrá alguien separarnos" data-slides="7" data-times="13000,40000,66000,90000,115000,138000"></span>
+	<span class="himn" data-number="320" data-title="Jamás se dice 'adiós' allá" data-slides="7" data-times="7000,27000,47000,67000,87000,106000"></span>
+	<span class="himn" data-number="22" data-title="Jehová está en su santo templo" data-slides="3" data-times="19000,41000"></span>
+	<span class="himn" data-number="327" data-title="Jerusalén, mi amado hogar" data-slides="10" data-times="8000,27000,46000,65000,84000,103000,122000,141000,159000"></span>
+	<span class="himn" data-number="499" data-title="Jesús anduvo por aquí" data-slides="4" data-times="6000,25000,43000"></span>
+	<span class="himn" data-number="364" data-title="Jesús da paz" data-slides="4" data-times="10000,34000,58000,82000"></span>
+	<span class="himn" data-number="406" data-title="Jesús es mi luz" data-slides="12" data-times="10000,22000,33000,56000,79000,102000,114000,125000,148000,160000,171000"></span>
+	<span class="himn" data-number="434" data-title="Jesús es mi vida" data-slides="9" data-times="19000,41000,61000,87000,101000,121000,142000,168000"></span>
+	<span class="himn" data-number="518" data-title="Jesús está buscando voluntarios hoy" data-slides="17" data-times="17000,35000,52000,70000,88000,106000,124000,141000,159000,177000,195000,213000,230000,248000,266000,283000"></span>
+	<span class="himn" data-number="237" data-title="Jesús hoy espera entrar en tu ser" data-slides="9" data-times="14000,30000,46000,61000,78000,94000,111000,126000"></span>
+	<span class="himn" data-number="469" data-title="Jesús me guía" data-slides="13" data-times="27000,40000,53000,79000,99000,106000,133000,147000,159000,187000,201000,214000"></span>
+	<span class="himn" data-number="164" data-title="Jesús pronto volverá" data-slides="9" data-times="7000,26000,44000,62000,80000,99000,116000,135000"></span>
+	<span class="himn" data-number="103" data-title="Jesús resucitado" data-slides="7" data-times="39000,78000,120000,158000,200000,238000"></span>
+	<span class="himn" data-number="371" data-title="Jesús te ama" data-slides="7" data-times="11000,25000,38000,65000,79000,92000"></span>
+	<span class="himn" data-number="612" data-title="Jesús te necesita hoy" data-slides="9" data-times="8000,19000,29000,38000,48000,58000,68000,78000"></span>
+	<span class="himn" data-number="605" data-title="Jesús tiene tiempo" data-slides="5" data-times="5000,18000,30000,44000"></span>
+	<span class="himn" data-number="472" data-title="Jesús, mi guía es" data-slides="5" data-times="20000,41000,64000,84000"></span>
+	<span class="himn" data-number="441" data-title="Jesús, te necesito" data-slides="7" data-times="47000,71000,95000,118000,141000,164000"></span>
+	<span class="himn" data-number="357" data-title="Jesús, tú eres mi alegría" data-slides="8" data-times="16000,39000,61000,79000,109000,139000,167000"></span>
+	<span class="himn" data-number="256" data-title="Jesús, yo he prometido" data-slides="9" data-times="11000,36000,61000,86000,111000,136000,160000,185000"></span>
+	<span class="himn" data-number="260" data-title="Junto a la cruz de Cristo" data-slides="7" data-times="10000,32000,55000,77000,99000,121000"></span>
+	<span class="himn" data-number="149" data-title="Junto a la cruz do Jesús murió" data-slides="10" data-times="18000,39000,60000,81000,101000,122000,142000,163000"></span>
+	<span class="himn" data-number="209" data-title="La Biblia nos habla de Cristo" data-slides="13" data-times="26000,53000,75000,97000,117000,144000,167000,189000,209000,236000,259000,281000"></span>
+	<span class="himn" data-number="583" data-title="La Cena de la Comunión" data-slides="5" data-times="22000,48000,73000,98000"></span>
+	<span class="himn" data-number="73" data-title="La creación" data-slides="10" data-times="8000,34000,59000,78000,103000,128000,147000,172000,197000"></span>
+	<span class="himn" data-number="531" data-title="La familia de Dios" data-slides="5" data-times="8000,27000,45000,65000"></span>
+	<span class="himn" data-number="579" data-title="La fuente veo" data-slides="9" data-times="20000,40000,60000,80000,100000,120000,140000,161000"></span>
+	<span class="himn" data-number="571" data-title="La historia de Cristo contemos" data-slides="9" data-times="8000,33000,53000,68000,77000,97000,113000,122000"></span>
+	<span class="himn" data-number="313" data-title="La hora del Juicio" data-slides="9" data-times="11000,35000,60000,84000,109000,133000,158000,182000"></span>
+	<span class="himn" data-number="331" data-title="La mañana gloriosa" data-slides="7" data-times="12000,32000,43000,58000,79000,89000"></span>
+	<span class="himn" data-number="191" data-title="La nueva proclamad" data-slides="17" data-times="9000,28000,45000,65000,84000,103000,120000,139000,158000,177000,195000,214000,232000,252000,269000,289000"></span>
+	<span class="himn" data-number="83" data-title="La primera Navidad" data-slides="9" data-times="16000,49000,66000,98000,116000,148000,165000,198000"></span>
+	<span class="himn" data-number="235" data-title="La razón de vivir" data-slides="10" data-times="13000,27000,40000,55000,81000,95000,116000,130000"></span>
+	<span class="himn" data-number="170" data-title="La segunda venida de Cristo" data-slides="9" data-times="10000,37000,64000,91000,118000,145000,172000,199000"></span>
+	<span class="himn" data-number="265" data-title="La senda ancha dejaré" data-slides="7" data-times="10000,32000,55000,77000,100000,122000"></span>
+	<span class="himn" data-number="139" data-title="La tierna voz del Salvador" data-slides="9" data-times="13000,36000,60000,85000,110000,133000,158000,182000"></span>
+	<span class="himn" data-number="104" data-title="La tumba le encerró" data-slides="7" data-times="15000,33000,47000,64000,82000,96000,113000,131000,145000"></span>
+	<span class="himn" data-number="309" data-title="La voz de Jesús" data-slides="13" data-times="12000,27000,41000,56000,71000,86000,100000,115000,130000,145000,160000,174000"></span>
+	<span class="himn" data-number="580" data-title="Las aguas del bautismo" data-slides="7" data-times="10000,33000,56000,79000,101000,124000"></span>
+	<span class="himn" data-number="535" data-title="Las faenas terminadas" data-slides="7" data-times="10000,28000,44000,61000,78000,95000"></span>
+	<span class="himn" data-number="295" data-title="Las manos, Padre" data-slides="7" data-times="8000,28000,48000,67000,87000,107000"></span>
+	<span class="himn" data-number="338" data-title="Las riberas de dicha inmortal" data-slides="7" data-times="18000,39000,60000,82000,103000,124000"></span>
+	<span class="himn" data-number="391" data-title="¿Le importará a Jesús?" data-slides="9" data-times="10000,34000,59000,84000,108000,133000,158000,183000"></span>
+	<span class="himn" data-number="300" data-title="Lejos de mi Padre Dios" data-slides="9" data-times="10000,34000,57000,80000,104000,127000,150000,173000"></span>
+	<span class="himn" data-number="491" data-title="Levántate, cristiano" data-slides="7" data-times="24000,41000,58000,74000,90000,106000"></span>
+	<span class="himn" data-number="606" data-title="Llama Jesús, el Buen Pastor" data-slides="7" data-times="8000,32000,56000,79000,102000,126000"></span>
+	<span class="himn" data-number="306" data-title="Llegó Jesús" data-slides="17" data-times="11000,24000,37000,49000,62000,75000,87000,100000,112000,125000,137000,150000,163000,176000,188000,200000"></span>
+	<span class="himn" data-number="192" data-title="Llena mi ser" data-slides="3" data-times="11000,35000"></span>
+	<span class="himn" data-number="427" data-title="Lleva todo tu pesar a Cristo" data-slides="7" data-times="14000,35000,58000,79000,102000,124000"></span>
+	<span class="himn" data-number="18" data-title="Load al Padre" data-slides="7" data-times="5000,18000,32000,45000,58000,71000"></span>
+	<span class="himn" data-number="15" data-title="Loámoste, ¡oh Dios!" data-slides="7" data-times="9000,23000,39000,53000,71000,86000"></span>
+	<span class="himn" data-number="477" data-title="Los que aman al Señor" data-slides="10" data-times="9000,28000,36000,55000,73000,81000,100000,118000,126000"></span>
+	<span class="himn" data-number="523" data-title="Los sabios dan su ciencia" data-slides="7" data-times="9000,30000,51000,72000,93000,114000"></span>
+	<span class="himn" data-number="262" data-title="Los tesoros del mundo" data-slides="10" data-times="6000,21000,36000,52000,66000,81000,97000,111000,126000"></span>
+	<span class="himn" data-number="177" data-title="Los tres mensajes angélicos" data-slides="9" data-times="6000,25000,39000,58000,72000,91000,105000,124000"></span>
+	<span class="himn" data-number="157" data-title="¡Majestad!" data-slides="5" data-times="7000,28000,47000,67000"></span>
+	<span class="himn" data-number="497" data-title="Manos" data-slides="9" data-times="21000,37000,50000,64000,80000,96000,109000,124000"></span>
+	<span class="himn" data-number="305" data-title="Maravillosa su gracia es" data-slides="10" data-times="11000,25000,38000,65000,78000,91000,118000,131000,145000"></span>
+	<span class="himn" data-number="511" data-title="Marcharé en la divina luz" data-slides="9" data-times="8000,29000,51000,72000,95000,115000,137000,159000"></span>
+	<span class="himn" data-number="341" data-title="Más cerca del hogar" data-slides="5" data-times="14000,38000,65000,88000"></span>
+	<span class="himn" data-number="446" data-title="Más cerca, oh Dios, de ti" data-slides="9" data-times="28000,51000,76000,99000,125000,161000,174000,198000"></span>
+	<span class="himn" data-number="445" data-title="Más de Jesús" data-slides="9" data-times="10000,31000,52000,72000,93000,113000,134000,154000"></span>
+	<span class="himn" data-number="447" data-title="Más santidad dame" data-slides="7" data-times="7000,25000,43000,60000,78000,95000"></span>
+	<span class="himn" data-number="228" data-title="Me buscaréis y me hallaréis" data-slides="3" data-times="23000,44000"></span>
+	<span class="himn" data-number="284" data-title="Me dice el Salvador" data-slides="9" data-times="28000,51000,74000,97000,119000,141000,172000,196000"></span>
+	<span class="himn" data-number="270" data-title="Meditar en Jesús" data-slides="13" data-times="12000,25000,38000,60000,74000,87000,109000,122000,135000,157000,171000,185000"></span>
+	<span class="himn" data-number="490" data-title="Mejor que los sacrificios" data-slides="10" data-times="15000,32000,58000,68000,85000,111000,121000,138000,164000"></span>
+	<span class="himn" data-number="548" data-title="Mi corazón se llena de alegría" data-slides="6" data-times="8000,46000,65000,85000,104000"></span>
+	<span class="himn" data-number="495" data-title="Mi deber" data-slides="8" data-times="28000,44000,55000,67000,89000,106000,128000"></span>
+	<span class="himn" data-number="57" data-title="Mi Dios me ama" data-slides="9" data-times="9000,21000,32000,44000,55000,66000,78000,89000"></span>
+	<span class="himn" data-number="259" data-title="Mi espíritu, alma y cuerpo" data-slides="7" data-times="16000,37000,58000,78000,99000,119000"></span>
+	<span class="himn" data-number="393" data-title="Mi fe contempla a ti" data-slides="7" data-times="9000,30000,46000,61000,83000,99000"></span>
+	<span class="himn" data-number="335" data-title="Mi hogar celestial" data-slides="7" data-times="25000,51000,78000,104000,131000,157000"></span>
+	<span class="himn" data-number="455" data-title="Mi mano ten" data-slides="7" data-times="17000,35000,53000,70000,88000,106000"></span>
+	<span class="himn" data-number="463" data-title="Mi oración" data-slides="4" data-times="15000,33000,51000"></span>
+	<span class="himn" data-number="373" data-title="Mi Redentor es Cristo" data-slides="9" data-times="15000,36000,56000,76000,97000,117000,138000,158000"></span>
+	<span class="himn" data-number="304" data-title="Mi Redentor, el Rey de gloria" data-slides="13" data-times="14000,40000,59000,80000,107000,126000,145000,169000,187000,206000,230000,248000"></span>
+	<span class="himn" data-number="144" data-title="Mi Salvador" data-slides="3" data-times="24000,51000"></span>
+	<span class="himn" data-number="501" data-title="Mi vida al servicio de Dios" data-slides="3" data-times="15000,33000"></span>
+	<span class="himn" data-number="214" data-title="Mientras Jesús te llama" data-slides="7" data-times="11000,32000,53000,74000,95000,117000"></span>
+	<span class="himn" data-number="438" data-title="Mira hacia Dios" data-slides="10" data-times="12000,38000,51000,63000,89000,102000,115000,140000,153000"></span>
+	<span class="himn" data-number="174" data-title="Mira los hitos" data-slides="7" data-times="10000,32000,54000,75000,97000,118000"></span>
+	<span class="himn" data-number="59" data-title="Mirad qué amor" data-slides="4" data-times="5000,17000,35000"></span>
+	<span class="himn" data-number="457" data-title="More en mí la belleza del Salvador" data-slides="3" data-times="7000,24000"></span>
+	<span class="himn" data-number="199" data-title="Movidos por tu Espíritu" data-slides="7" data-times="13000,36000,48000,71000,83000,105000"></span>
+	<span class="himn" data-number="407" data-title="Muy cerca de mi Redentor" data-slides="7" data-times="21000,44000,68000,91000,114000,137000"></span>
+	<span class="himn" data-number="476" data-title="¿Muy lejos el hogar está?" data-slides="8" data-times="21000,44000,67000,90000,113000,125000,147000"></span>
+	<span class="himn" data-number="422" data-title="Nada puede ya faltarme" data-slides="9" data-times="10000,30000,51000,70000,90000,110000,130000,150000"></span>
+	<span class="himn" data-number="146" data-title="Ni en la tierra" data-slides="4" data-times="11000,37000,62000"></span>
+	<span class="himn" data-number="112" data-title="Ningún otro me amó cual Cristo" data-slides="7" data-times="12000,39000,68000,93000,120000,146000"></span>
+	<span class="himn" data-number="607" data-title="Nítido rayo por Cristo" data-slides="9" data-times="23000,44000,66000,84000,103000,122000,142000,161000"></span>
+	<span class="himn" data-number="183" data-title="No me olvidé de ti" data-slides="9" data-times="13000,36000,59000,82000,107000,131000,154000,176000"></span>
+	<span class="himn" data-number="444" data-title="No me pases" data-slides="9" data-times="8000,28000,47000,66000,85000,104000,125000,144000"></span>
+	<span class="himn" data-number="325" data-title="No puede el mundo ser mi hogar" data-slides="7" data-times="9000,33000,56000,79000,103000,126000"></span>
+	<span class="himn" data-number="117" data-title="No sé por qué" data-slides="7" data-times="21000,63000,107000,148000,191000,233000"></span>
+	<span class="himn" data-number="559" data-title="No te dé temor" data-slides="9" data-times="21000,44000,66000,88000,110000,132000,155000,177000"></span>
+	<span class="himn" data-number="543" data-title="No te olvides nunca del día del Señor" data-slides="10" data-times="7000,27000,46000,65000,84000,102000,121000,140000,159000"></span>
+	<span class="himn" data-number="251" data-title="No yo, sino él" data-slides="9" data-times="21000,43000,65000,88000,110000,132000,154000,176000"></span>
+	<span class="himn" data-number="81" data-title="Noche de paz" data-slides="7" data-times="11000,30000,49000,69000,88000,107000"></span>
+	<span class="himn" data-number="32" data-title="Nos reunimos en tu santuario" data-slides="3" data-times="8000,30000"></span>
+	<span class="himn" data-number="328" data-title="¿Nos veremos junto al río?" data-slides="9" data-times="24000,44000,67000,87000,109000,129000,152000,172000"></span>
+	<span class="himn" data-number="70" data-title="¡Nuestro Dios reina!" data-slides="3" data-times="15000,42000"></span>
+	<span class="himn" data-number="51" data-title="Nuestro sol se pone ya" data-slides="7" data-times="16000,44000,71000,99000,127000,155000"></span>
+	<span class="himn" data-number="420" data-title="Nunca desmayes" data-slides="9" data-times="11000,31000,52000,71000,93000,111000,133000,152000"></span>
+	<span class="himn" data-number="512" data-title="Nunca estéis desanimados" data-slides="10" data-times="17000,36000,54000,72000,91000,109000,127000,146000,164000"></span>
+	<span class="himn" data-number="337" data-title="Nunca más adiós" data-slides="13" data-times="13000,42000,69000,84000,99000,128000,155000,170000,184000,214000,241000,255000"></span>
+	<span class="himn" data-number="184" data-title="Nunca te rindas" data-slides="6" data-times="6000,35000,67000,82000,97000"></span>
+	<span class="himn" data-number="552" data-title="¡Oh!, cuánto necesita" data-slides="10" data-times="9000,23000,34000,59000,72000,84000,108000,121000,133000"></span>
+	<span class="himn" data-number="439" data-title="¡Oh!, quién pudiera andar con Dios" data-slides="5" data-times="15000,32000,48000,80000"></span>
+	<span class="himn" data-number="402" data-title="¡Oh!, salvo en la Roca" data-slides="13" data-times="15000,33000,51000,69000,86000,105000,123000,142000,161000,180000,199000,217000"></span>
+	<span class="himn" data-number="416" data-title="¡Oh!, tenga yo la ardiente fe" data-slides="9" data-times="7000,24000,38000,55000,69000,85000,100000,116000"></span>
+	<span class="himn" data-number="53" data-title="¡Oh amor de Dios!" data-slides="10" data-times="24000,44000,64000,85000,105000,125000,145000,165000,185000"></span>
+	<span class="himn" data-number="397" data-title="Oh buen Señor, velada está" data-slides="5" data-times="13000,41000,68000,96000"></span>
+	<span class="himn" data-number="255" data-title="Oh Cristo, te adoro" data-slides="9" data-times="12000,53000,66000,93000,120000,160000,174000,201000"></span>
+	<span class="himn" data-number="161" data-title="¡Oh! cuán gratas las nuevas" data-slides="10" data-times="30000,44000,57000,86000,100000,112000,142000,155000,168000"></span>
+	<span class="himn" data-number="7" data-title="Oh Dios, mi soberano Rey" data-slides="5" data-times="6000,22000,39000,56000"></span>
+	<span class="himn" data-number="503" data-title="Oh Dios, que deseas la vida" data-slides="7" data-times="5000,22000,38000,70000,86000,102000"></span>
+	<span class="himn" data-number="48" data-title="Oh Dios, si he ofendido un corazón" data-slides="9" data-times="14000,27000,40000,53000,66000,80000,93000,106000"></span>
+	<span class="himn" data-number="450" data-title="¡Oh Jesús, Pastor divino!" data-slides="9" data-times="37000,58000,74000,94000,110000,131000,150000,172000"></span>
+	<span class="himn" data-number="609" data-title="¡Oh jóvenes, venid!" data-slides="17" data-times="24000,37000,50000,61000,74000,87000,99000,111000,123000,136000,149000,160000,173000,185000,198000,209000"></span>
+	<span class="himn" data-number="442" data-title="¡Oh! ¡Maestro y Salvador!" data-slides="6" data-times="17000,45000,72000,82000,99000"></span>
+	<span class="himn" data-number="17" data-title="Oh Padre, eterno Dios" data-slides="7" data-times="12000,31000,42000,60000,71000,85000"></span>
+	<span class="himn" data-number="27" data-title="¡Oh Pastor divino, escucha!" data-slides="9" data-times="9000,29000,39000,60000,72000,91000,102000,122000"></span>
+	<span class="himn" data-number="396" data-title="¡Oh qué Salvador!" data-slides="15" data-times="10000,21000,33000,44000,61000,84000,95000,113000,136000,147000,164000,176000,187000,198000"></span>
+	<span class="himn" data-number="257" data-title="¡Oh! ven, te invito, Cristo" data-slides="9" data-times="14000,39000,52000,76000,89000,113000,128000,153000"></span>
+	<span class="himn" data-number="88" data-title="Oh, aldehuela de Belén" data-slides="7" data-times="9000,30000,51000,73000,95000,117000"></span>
+	<span class="himn" data-number="414" data-title="¡Oh, buen Maestro, despierta!" data-slides="16" data-times="16000,34000,50000,63000,77000,95000,112000,128000,141000,154000,172000,189000,205000,218000,231000"></span>
+	<span class="himn" data-number="204" data-title="Oh, cantádmelas otra vez" data-slides="10" data-times="21000,41000,51000,70000,90000,100000,119000,140000,150000"></span>
+	<span class="himn" data-number="395" data-title="¡Oh, cuán dulce es fiar en Cristo!" data-slides="7" data-times="10000,34000,58000,82000,106000,130000"></span>
+	<span class="himn" data-number="115" data-title="¡Oh, cuán grande amor!" data-slides="3" data-times="8000,29000"></span>
+	<span class="himn" data-number="136" data-title="¡Oh, cuánto amo a Cristo!" data-slides="8" data-times="7000,24000,42000,59000,76000,93000"></span>
+	<span class="himn" data-number="539" data-title="¡Oh, día delicioso!" data-slides="7" data-times="22000,47000,71000,96000,120000,144000"></span>
+	<span class="himn" data-number="36" data-title="¡Oh, Dios, que oyes cada oración!" data-slides="3" data-times="15000,38000"></span>
+	<span class="himn" data-number="611" data-title="Oh, juventud del Rey" data-slides="3" data-times="19000,43000"></span>
+	<span class="himn" data-number="526" data-title="Oh, mi patria, te prometo hoy" data-slides="7" data-times="21000,43000,64000,86000,108000,129000"></span>
+	<span class="himn" data-number="378" data-title="¡Oh, qué amigo nos es Cristo!" data-slides="8" data-times="10000,30000,49000,62000,87000,113000,138000"></span>
+	<span class="himn" data-number="340" data-title="¡Oh, qué música divina!" data-slides="7" data-times="7000,24000,43000,60000,79000,97000"></span>
+	<span class="himn" data-number="31" data-title="¡Oh, Señor! al orar" data-slides="3" data-times="12000,40000"></span>
+	<span class="himn" data-number="224" data-title="Oí la voz del buen Jesús" data-slides="12" data-times="10000,36000,61000,87000,113000,137000,163000,188000"></span>
+	<span class="himn" data-number="223" data-title="Oí la voz del Salvador" data-slides="7" data-times="11000,36000,61000,88000,112000,139000"></span>
+	<span class="himn" data-number="561" data-title="Oigo del Señor la voz llamando" data-slides="9" data-times="11000,34000,59000,82000,107000,131000,155000,179000"></span>
+	<span class="himn" data-number="597" data-title="Oración por un niño" data-slides="5" data-times="20000,43000,65000,88000"></span>
+	<span class="himn" data-number="458" data-title="Orad por mí" data-slides="8" data-times="13000,43000,76000,91000,106000,138000,169000"></span>
+	<span class="himn" data-number="553" data-title="¿Os pusisteis a arar?" data-slides="9" data-times="11000,23000,39000,54000,78000,94000,104000,119000"></span>
+	<span class="himn" data-number="35" data-title="Oye, oh Señor" data-slides="2" data-times="21000"></span>
+	<span class="himn" data-number="368" data-title="Padre amado" data-slides="9" data-times="16000,32000,47000,63000,80000,97000,113000,129000"></span>
+	<span class="himn" data-number="19" data-title="Padre nuestro" data-slides="7" data-times="14000,28000,42000,55000,70000,83000"></span>
+	<span class="himn" data-number="250" data-title="Padre, a tus pies me postro" data-slides="10" data-times="10000,33000,48000,57000,80000,95000,103000,126000,141000"></span>
+	<span class="himn" data-number="244" data-title="Padre, Dios" data-slides="7" data-times="10000,34000,58000,82000,106000,130000"></span>
+	<span class="himn" data-number="206" data-title="Padre, tu Palabra es mi delicia" data-slides="7" data-times="11000,32000,54000,76000,99000,120000"></span>
+	<span class="himn" data-number="418" data-title="Padre, yo vengo a ti" data-slides="10" data-times="3000,25000,46000,70000,91000,113000,137000,158000,180000"></span>
+	<span class="himn" data-number="468" data-title="Paso a paso Dios me guía" data-slides="10" data-times="7000,24000,37000,50000,67000,80000,92000,109000,123000"></span>
+	<span class="himn" data-number="361" data-title="Percibe mi alma un son" data-slides="9" data-times="9000,31000,52000,75000,96000,118000,139000,161000"></span>
+	<span class="himn" data-number="291" data-title="Perdido, fui a mi Jesús" data-slides="9" data-times="9000,32000,54000,77000,100000,122000,145000,167000"></span>
+	<span class="himn" data-number="241" data-title="Perdón te ruego, mi Señor y Dios" data-slides="5" data-times="16000,52000,88000,124000"></span>
+	<span class="himn" data-number="589" data-title="Perfecto amor" data-slides="7" data-times="11000,33000,55000,78000,101000,123000"></span>
+	<span class="himn" data-number="423" data-title="Pertenezco a mi Rey" data-slides="13" data-times="14000,31000,47000,64000,80000,97000,114000,130000,147000,164000,180000,196000"></span>
+	<span class="himn" data-number="572" data-title="Pescadores de hombres" data-slides="7" data-times="20000,41000,62000,83000,104000,126000"></span>
+	<span class="himn" data-number="151" data-title="Por eso le amo" data-slides="5" data-times="6000,22000,37000,53000"></span>
+	<span class="himn" data-number="292" data-title="Por fe en Cristo, el Redentor" data-slides="10" data-times="7000,26000,39000,53000,71000,83000,97000,115000,128000"></span>
+	<span class="himn" data-number="370" data-title="Por la excelsa majestad" data-slides="9" data-times="9000,25000,41000,57000,73000,88000,104000,120000"></span>
+	<span class="himn" data-number="419" data-title="Por la justicia de Jesús" data-slides="7" data-times="8000,24000,43000,57000,76000,95000"></span>
+	<span class="himn" data-number="47" data-title="Por la mañana" data-slides="5" data-times="10000,33000,56000,79000"></span>
+	<span class="himn" data-number="528" data-title="Por montañas, muy cansado" data-slides="9" data-times="25000,51000,77000,101000,126000,151000,176000,201000"></span>
+	<span class="himn" data-number="269" data-title="Prefiero a mi Cristo" data-slides="13" data-times="19000,39000,57000,75000,94000,113000,131000,150000,168000,187000,206000,224000"></span>
+	<span class="himn" data-number="227" data-title="Preste oídos el humano" data-slides="11" data-times="10000,32000,55000,66000,83000,100000,116000,132000,143000,166000"></span>
+	<span class="himn" data-number="576" data-title="Proclamo hoy que soy cristiano" data-slides="7" data-times="10000,37000,62000,88000,114000,140000"></span>
+	<span class="himn" data-number="172" data-title="Promesa dulce" data-slides="9" data-times="19000,41000,62000,83000,104000,125000,146000,167000"></span>
+	<span class="himn" data-number="564" data-title="Pronto la noche viene" data-slides="9" data-times="10000,32000,54000,75000,96000,117000,139000,160000"></span>
+	<span class="himn" data-number="324" data-title="Pronto yo veré a Jesús" data-slides="7" data-times="10000,32000,56000,78000,101000,123000"></span>
+	<span class="himn" data-number="278" data-title="¿Puede el mundo ver a Jesús en mí?" data-slides="11" data-times="9000,20000,30000,41000,52000,73000,83000,95000,116000,126000"></span>
+	<span class="himn" data-number="498" data-title="Puedes demostrar con tus manos" data-slides="6" data-times="12000,28000,50000,65000,78000"></span>
+	<span class="himn" data-number="268" data-title="Puedo oír tu voz llamando" data-slides="7" data-times="14000,46000,78000,110000,142000,173000"></span>
+	<span class="himn" data-number="221" data-title="Puertas abiertas encontrarán" data-slides="9" data-times="8000,26000,45000,63000,82000,100000,119000,138000"></span>
+	<span class="himn" data-number="38" data-title="Que Dios te guarde" data-slides="5" data-times="16000,35000,61000,90000"></span>
+	<span class="himn" data-number="557" data-title="¿Qué estás haciendo por Cristo?" data-slides="10" data-times="6000,23000,39000,56000,72000,88000,105000,122000,138000"></span>
+	<span class="himn" data-number="474" data-title="¿Qué me importan?" data-slides="9" data-times="24000,38000,51000,78000,99000,118000,132000,158000"></span>
+	<span class="himn" data-number="289" data-title="¿Qué me puede dar perdón?" data-slides="7" data-times="9000,31000,52000,73000,94000,115000"></span>
+	<span class="himn" data-number="248" data-title="Que mi vida entera esté" data-slides="9" data-times="17000,41000,66000,91000,116000,140000,165000,189000"></span>
+	<span class="himn" data-number="91" data-title="¿Qué niño es este?" data-slides="7" data-times="10000,33000,57000,80000,103000,126000"></span>
+	<span class="himn" data-number="274" data-title="¿Qué te daré, Maestro?" data-slides="10" data-times="25000,54000,82000,109000,137000,165000,193000,221000,249000"></span>
+	<span class="himn" data-number="42" data-title="Queda, Señor" data-slides="3" data-times="19000,43000"></span>
+	<span class="himn" data-number="167" data-title="¿Quién en deslumbrante gloria?" data-slides="10" data-times="18000,38000,58000,78000,97000,117000,137000,157000,176000"></span>
+	<span class="himn" data-number="510" data-title="¿Quién está por Cristo?" data-slides="13" data-times="16000,34000,52000,70000,88000,105000,123000,141000,159000,176000,195000,212000"></span>
+	<span class="himn" data-number="293" data-title="¿Quieres ser salvo de toda maldad?" data-slides="10" data-times="19000,30000,39000,60000,71000,80000,101000,112000,121000"></span>
+	<span class="himn" data-number="482" data-title="Quiero cantar" data-slides="8" data-times="14000,29000,46000,62000,79000,112000,128000"></span>
+	<span class="himn" data-number="460" data-title="Quiero estar cerca de Cristo" data-slides="8" data-times="15000,31000,46000,75000,104000,134000,163000"></span>
+	<span class="himn" data-number="343" data-title="Quiero llegar a ser parte del cielo" data-slides="7" data-times="11000,40000,72000,102000,122000,150000"></span>
+	<span class="himn" data-number="440" data-title="Quiero, Jesús, contigo andar" data-slides="6" data-times="13000,45000,74000,89000,104000"></span>
+	<span class="himn" data-number="359" data-title="Regocijaos siempre" data-slides="3" data-times="9000,20000"></span>
+	<span class="himn" data-number="287" data-title="Rey de mi vida" data-slides="7" data-times="10000,36000,61000,86000,112000,137000"></span>
+	<span class="himn" data-number="307" data-title="Roca de la eternidad" data-slides="7" data-times="7000,21000,35000,49000,63000,77000"></span>
+	<span class="himn" data-number="98" data-title="Rostro divino" data-slides="5" data-times="6000,36000,67000,98000"></span>
+	<span class="himn" data-number="547" data-title="Sábado es" data-slides="4" data-times="17000,32000,44000"></span>
+	<span class="himn" data-number="537" data-title="Sábado santo" data-slides="5" data-times="14000,54000,93000,131000"></span>
+	<span class="himn" data-number="66" data-title="¿Sabes cuántos?" data-slides="7" data-times="8000,27000,47000,65000,85000,104000"></span>
+	<span class="himn" data-number="532" data-title="Sagrado es el amor" data-slides="5" data-times="12000,37000,62000,88000"></span>
+	<span class="himn" data-number="297" data-title="Salvado con sangre por Cristo" data-slides="7" data-times="7000,26000,45000,63000,82000,101000"></span>
+	<span class="himn" data-number="261" data-title="Salvador, a ti me rindo" data-slides="9" data-times="21000,45000,68000,92000,115000,139000,161000,186000"></span>
+	<span class="himn" data-number="448" data-title="Salvador, mi bien eterno" data-slides="7" data-times="25000,49000,72000,94000,117000,139000"></span>
+	<span class="himn" data-number="415" data-title="Salvo en los tiernos brazos" data-slides="10" data-times="7000,27000,47000,68000,88000,108000,128000,148000,168000"></span>
+	<span class="himn" data-number="94" data-title="Sangró mi soberano Dios" data-slides="5" data-times="17000,35000,55000,74000"></span>
+	<span class="himn" data-number="208" data-title="¡Santa Biblia!" data-slides="9" data-times="10000,30000,40000,60000,70000,90000,101000,120000"></span>
+	<span class="himn" data-number="545" data-title="Santo día" data-slides="7" data-times="8000,32000,55000,79000,102000,126000"></span>
+	<span class="himn" data-number="190" data-title="Santo Espíritu de Cristo" data-slides="9" data-times="8000,26000,44000,62000,80000,98000,116000,134000"></span>
+	<span class="himn" data-number="196" data-title="Santo Espíritu de Dios" data-slides="4" data-times="7000,42000,77000"></span>
+	<span class="himn" data-number="203" data-title="Santo Espíritu llena mi vida" data-slides="5" data-times="12000,37000,60000,85000"></span>
+	<span class="himn" data-number="546" data-title="Santo sábado, bendito" data-slides="7" data-times="11000,33000,44000,65000,76000,96000"></span>
+	<span class="himn" data-number="60" data-title="¡Santo! ¡Santo! ¡Santo! Tu gloria llena" data-slides="7" data-times="17000,53000,77000,112000,137000,173000"></span>
+	<span class="himn" data-number="61" data-title="Santo, Santo, Santo, Dios Omnipotente" data-slides="7" data-times="10000,31000,53000,74000,96000,117000"></span>
+	<span class="himn" data-number="62" data-title="Santo, Santo, Santo, santo es el Señor" data-slides="5" data-times="13000,42000,70000,99000"></span>
+	<span class="himn" data-number="478" data-title="Sé fiel siempre, hermano" data-slides="10" data-times="8000,19000,35000,50000,61000,71000,92000,103000,119000"></span>
+	<span class="himn" data-number="79" data-title="Se oye un canto en alta esfera" data-slides="7" data-times="18000,36000,64000,82000,109000,127000"></span>
+	<span class="himn" data-number="405" data-title="Sé quien es Jesús" data-slides="5" data-times="11000,25000,52000,65000"></span>
+	<span class="himn" data-number="77" data-title="Sea exaltado" data-slides="4" data-times="7000,19000,39000"></span>
+	<span class="himn" data-number="375" data-title="Sed puros y santos" data-slides="7" data-times="8000,28000,47000,68000,87000,107000"></span>
+	<span class="himn" data-number="504" data-title="Señor de todos" data-slides="6" data-times="11000,36000,62000,87000,113000"></span>
+	<span class="himn" data-number="527" data-title="Señor Jehová, omnipotente Dios" data-slides="4" data-times="8000,49000,91000"></span>
+	<span class="himn" data-number="52" data-title="Señor Jesús, el día ya se fue" data-slides="7" data-times="9000,49000,89000,109000,129000,149000"></span>
+	<span class="himn" data-number="594" data-title="Señor, gracias por mi hogar" data-slides="4" data-times="14000,36000,58000"></span>
+	<span class="himn" data-number="69" data-title="Señor, mi Dios" data-slides="15" data-times="13000,26000,38000,50000,65000,89000,101000,115000,128000,140000,152000,166000,191000,203000"></span>
+	<span class="himn" data-number="541" data-title="Señor, reposamos" data-slides="7" data-times="18000,39000,68000,98000,118000,138000"></span>
+	<span class="himn" data-number="67" data-title="¡Señor, yo te conozco!" data-slides="9" data-times="9000,28000,47000,67000,87000,107000,126000,146000"></span>
+	<span class="himn" data-number="280" data-title="Ser semejante a Jesús" data-slides="10" data-times="14000,32000,41000,52000,71000,79000,91000,109000,118000"></span>
+	<span class="himn" data-number="173" data-title="¿Será al albor?" data-slides="10" data-times="14000,32000,46000,71000,89000,104000,128000,146000,161000"></span>
+	<span class="himn" data-number="40" data-title="Shalom" data-slides="4" data-times="10000,34000,58000"></span>
+	<span class="himn" data-number="592" data-title="Si Dios está, ¡feliz hogar!" data-slides="4" data-times="14000,46000,79000"></span>
+	<span class="himn" data-number="567" data-title="Si en valles de peligros" data-slides="21" data-times="16000,38000,57000,70000,82000,98000,118000,138000,151000,162000,178000,200000,219000,232000,244000,260000,280000,300000,313000,324000"></span>
+	<span class="himn" data-number="413" data-title="Si la carga es pesada" data-slides="7" data-times="18000,41000,64000,87000,113000,137000"></span>
+	<span class="himn" data-number="409" data-title="Si mi débil fe flaqueare" data-slides="9" data-times="19000,39000,59000,80000,100000,121000,141000,162000"></span>
+	<span class="himn" data-number="180" data-title="Sí, lo veremos" data-slides="7" data-times="10000,25000,40000,54000,69000,91000"></span>
+	<span class="himn" data-number="467" data-title="¡Siempre el Salvador conmigo!" data-slides="12" data-times="18000,27000,34000,55000,63000,71000,91000,99000,107000,127000,143000"></span>
+	<span class="himn" data-number="25" data-title="Siento la presencia del Señor" data-slides="3" data-times="12000,27000"></span>
+	<span class="himn" data-number="166" data-title="Siervos de Dios, la trompeta tocad" data-slides="9" data-times="9000,20000,33000,45000,56000,69000,81000,105000"></span>
+	<span class="himn" data-number="23" data-title="¡Silencio! ¡Silencio!" data-slides="7" data-times="10000,34000,59000,83000,107000,131000"></span>
+	<span class="himn" data-number="489" data-title="Solo anhelo, Cristo amado" data-slides="7" data-times="8000,28000,48000,67000,87000,106000"></span>
+	<span class="himn" data-number="148" data-title="Solo Cristo" data-slides="2" data-times="16000"></span>
+	<span class="himn" data-number="430" data-title="Solo no estoy" data-slides="7" data-times="11000,26000,39000,67000,81000,95000"></span>
+	<span class="himn" data-number="90" data-title="Somos del oriente" data-slides="11" data-times="8000,26000,45000,63000,82000,100000,119000,137000,156000,174000"></span>
+	<span class="himn" data-number="530" data-title="Somos un pequeño pueblo muy feliz" data-slides="5" data-times="9000,18000,29000,49000"></span>
+	<span class="himn" data-number="390" data-title="Soy yo, Señor" data-slides="4" data-times="9000,30000,40000"></span>
+	<span class="himn" data-number="428" data-title="Su oveja soy" data-slides="4" data-times="11000,24000,36000"></span>
+	<span class="himn" data-number="303" data-title="Sublime gracia" data-slides="4" data-times="16000,53000,89000"></span>
+	<span class="himn" data-number="353" data-title="Suenan melodías en mi ser" data-slides="8" data-times="7000,27000,46000,56000,66000,85000,104000"></span>
+	<span class="himn" data-number="8" data-title="¡Suenen dulces himnos!" data-slides="17" data-times="9000,19000,30000,41000,52000,62000,73000,84000,94000,104000,115000,126000,137000,147000,158000,169000"></span>
+	<span class="himn" data-number="522" data-title="Suenen las palabras" data-slides="13" data-times="10000,22000,32000,44000,55000,67000,78000,89000,100000,112000,123000,134000"></span>
+	<span class="himn" data-number="496" data-title="Sus manos somos" data-slides="5" data-times="22000,45000,68000,90000"></span>
+	<span class="himn" data-number="249" data-title="Tal como soy" data-slides="5" data-times="13000,47000,81000,115000"></span>
+	<span class="himn" data-number="54" data-title="Tan bueno es Dios" data-slides="4" data-times="8000,27000,47000"></span>
+	<span class="himn" data-number="219" data-title="Tan triste y tan lejos de Dios" data-slides="15" data-times="15000,47000,63000,79000,96000,111000,128000,144000,161000,177000,193000,209000,242000,258000"></span>
+	<span class="himn" data-number="587" data-title="Te dedicamos, oh Señor" data-slides="4" data-times="11000,36000,59000"></span>
+	<span class="himn" data-number="573" data-title="Te envío a ti" data-slides="6" data-times="12000,40000,69000,99000,120000"></span>
+	<span class="himn" data-number="246" data-title="Te quiero, mi Señor" data-slides="9" data-times="16000,33000,51000,68000,86000,103000,121000,138000"></span>
+	<span class="himn" data-number="140" data-title="Te quiero, te quiero" data-slides="9" data-times="10000,30000,51000,71000,91000,112000,132000,152000"></span>
+	<span class="himn" data-number="240" data-title="Te ruego, oh Dios" data-slides="9" data-times="10000,31000,55000,77000,101000,122000,145000,168000"></span>
+	<span class="himn" data-number="234" data-title="¿Temes que en la lucha?" data-slides="10" data-times="9000,20000,30000,52000,64000,74000,96000,107000,118000"></span>
+	<span class="himn" data-number="426" data-title="Tengo paz" data-slides="10" data-times="21000,40000,60000,82000,101000,121000,143000,173000,182000"></span>
+	<span class="himn" data-number="507" data-title="Tentado, no cedas" data-slides="7" data-times="7000,44000,62000,98000,117000,153000"></span>
+	<span class="himn" data-number="574" data-title="Testimonio" data-slides="7" data-times="17000,38000,57000,77000,96000,116000"></span>
+	<span class="himn" data-number="213" data-title="Tierno y amante, Jesús nos invita" data-slides="10" data-times="14000,28000,42000,74000,87000,101000,133000,147000,161000"></span>
+	<span class="himn" data-number="575" data-title="Tocad trompeta ya" data-slides="9" data-times="18000,38000,57000,76000,95000,115000,133000,153000"></span>
+	<span class="himn" data-number="412" data-title="Todas las promesas" data-slides="13" data-times="6000,16000,24000,34000,43000,52000,60000,70000,78000,88000,96000,106000"></span>
+	<span class="himn" data-number="231" data-title="Todo en el altar" data-slides="10" data-times="21000,36000,51000,81000,95000,110000,139000,154000,169000"></span>
+	<span class="himn" data-number="591" data-title="Todo es bello en el hogar" data-slides="13" data-times="8000,27000,45000,63000,82000,100000,119000,137000,155000,174000,192000,211000"></span>
+	<span class="himn" data-number="68" data-title="Todo lo que ha creado Dios" data-slides="9" data-times="24000,48000,64000,88000,105000,129000,146000,170000"></span>
+	<span class="himn" data-number="12" data-title="Todos juntos reunidos" data-slides="5" data-times="8000,24000,42000,58000"></span>
+	<span class="himn" data-number="492" data-title="¡Trabajad! ¡Trabajad!" data-slides="10" data-times="22000,35000,48000,72000,85000,98000,123000,135000,149000"></span>
+	<span class="himn" data-number="524" data-title="Traían en silencio presentes al Señor" data-slides="10" data-times="16000,34000,52000,70000,88000,106000,124000,142000,160000"></span>
+	<span class="himn" data-number="279" data-title="Transfórmame a tu imagen" data-slides="5" data-times="11000,35000,58000,82000"></span>
+	<span class="himn" data-number="258" data-title="Tú dejaste tu trono" data-slides="13" data-times="11000,24000,38000,64000,78000,90000,117000,131000,144000,171000,185000,198000"></span>
+	<span class="himn" data-number="128" data-title="¡Tu nombre es dulce, buen Jesús!" data-slides="9" data-times="8000,28000,47000,67000,86000,105000,125000,144000"></span>
+	<span class="himn" data-number="437" data-title="Tu presencia, Padre amado, da consuelo" data-slides="2" data-times="9000"></span>
+	<span class="himn" data-number="33" data-title="Tu presencia, Padre amante, invocamos" data-slides="3" data-times="18000,47000"></span>
+	<span class="himn" data-number="28" data-title="Tu pueblo jubiloso" data-slides="7" data-times="22000,46000,69000,92000,116000,139000"></span>
+	<span class="himn" data-number="176" data-title="Tú verás al Rey viniendo" data-slides="7" data-times="13000,28000,42000,56000,71000,85000"></span>
+	<span class="himn" data-number="273" data-title="Tu vida, oh Salvador" data-slides="9" data-times="13000,36000,59000,82000,107000,130000,155000,178000"></span>
+	<span class="himn" data-number="106" data-title="Tuya es la gloria" data-slides="7" data-times="19000,61000,82000,124000,145000,187000"></span>
+	<span class="himn" data-number="253" data-title="Tuyo soy, Jesús" data-slides="9" data-times="10000,32000,57000,80000,105000,127000,152000,175000"></span>
+	<span class="himn" data-number="109" data-title="Un buen amigo tengo yo" data-slides="9" data-times="15000,33000,50000,66000,84000,101000,118000,134000"></span>
+	<span class="himn" data-number="95" data-title="Un día" data-slides="9" data-times="14000,42000,69000,96000,123000,149000,177000,204000"></span>
+	<span class="himn" data-number="264" data-title="Un día más por Cristo" data-slides="13" data-times="16000,30000,40000,58000,73000,82000,100000,113000,124000,143000,155000,167000"></span>
+	<span class="himn" data-number="326" data-title="Un día yo he de faltar" data-slides="9" data-times="10000,31000,53000,75000,96000,118000,139000,161000"></span>
+	<span class="himn" data-number="225" data-title="Un hombre llegóse de noche a Jesús" data-slides="13" data-times="21000,33000,44000,68000,80000,91000,115000,127000,138000,162000,174000,184000"></span>
+	<span class="himn" data-number="242" data-title="Una es, Señor, mi petición" data-slides="9" data-times="5000,27000,48000,70000,92000,113000,135000,157000"></span>
+	<span class="himn" data-number="181" data-title="Una esperanza" data-slides="6" data-times="24000,64000,97000,124000,147000"></span>
+	<span class="himn" data-number="3" data-title="Unidos en espíritu" data-slides="7" data-times="8000,25000,41000,58000,74000,90000"></span>
+	<span class="himn" data-number="485" data-title="Unidos en verdad" data-slides="8" data-times="11000,25000,38000,51000,65000,91000,105000"></span>
+	<span class="himn" data-number="84" data-title="Ve, dilo en las montañas" data-slides="8" data-times="8000,25000,44000,61000,80000,97000,116000"></span>
+	<span class="himn" data-number="565" data-title="¡Ve, ve oh Sión!" data-slides="11" data-times="43000,63000,81000,100000,139000,159000,179000,197000,217000,255000"></span>
+	<span class="himn" data-number="153" data-title="Ved a Cristo" data-slides="9" data-times="13000,33000,54000,73000,93000,113000,132000,152000"></span>
+	<span class="himn" data-number="175" data-title="Ved a Cristo, que se acerca" data-slides="7" data-times="12000,30000,48000,66000,88000,106000"></span>
+	<span class="himn" data-number="233" data-title="Ven a la Fuente de vida" data-slides="9" data-times="18000,37000,56000,75000,95000,114000,135000,154000"></span>
+	<span class="himn" data-number="465" data-title="Ven junto a mí" data-slides="7" data-times="22000,46000,70000,93000,118000,141000"></span>
+	<span class="himn" data-number="588" data-title="Ven, alma que lloras" data-slides="7" data-times="10000,34000,58000,82000,106000,130000"></span>
+	<span class="himn" data-number="464" data-title="Ven, inspíranos" data-slides="7" data-times="14000,30000,45000,74000,90000,104000"></span>
+	<span class="himn" data-number="283" data-title="Ven, Señor Jesús" data-slides="2" data-times="10000"></span>
+	<span class="himn" data-number="165" data-title="¡Vendrá el Señor!" data-slides="13" data-times="23000,40000,55000,71000,86000,102000,117000,133000,148000,165000,180000,196000"></span>
+	<span class="himn" data-number="142" data-title="Venid, cantad, de gozo en plenitud" data-slides="13" data-times="15000,33000,49000,75000,85000,102000,118000,144000,153000,170000,187000,212000"></span>
+	<span class="himn" data-number="133" data-title="Venid, con cánticos venid" data-slides="9" data-times="8000,24000,33000,50000,59000,76000,85000,102000"></span>
+	<span class="himn" data-number="87" data-title="Venid, fieles todos" data-slides="7" data-times="19000,49000,69000,98000,118000,147000"></span>
+	<span class="himn" data-number="80" data-title="Venid, pastorcillos" data-slides="7" data-times="7000,21000,36000,50000,65000,79000"></span>
+	<span class="himn" data-number="182" data-title="Veremos a Cristo" data-slides="6" data-times="9000,57000,106000,130000,154000"></span>
+	<span class="himn" data-number="160" data-title="Viene otra vez nuestro Salvador" data-slides="13" data-times="16000,31000,53000,71000,90000,108000,126000,144000,162000,181000,199000,217000"></span>
+	<span class="himn" data-number="194" data-title="Vive en mí" data-slides="7" data-times="10000,33000,57000,79000,104000,126000"></span>
+	<span class="himn" data-number="266" data-title="Vivo por Cristo" data-slides="17" data-times="17000,35000,53000,70000,88000,105000,123000,140000,160000,178000,196000,213000,234000,252000,270000,287000"></span>
+	<span class="himn" data-number="570" data-title="Voluntario del Señor" data-slides="10" data-times="4000,18000,30000,43000,56000,69000,82000,95000,108000"></span>
+	<span class="himn" data-number="481" data-title="Voy al cielo" data-slides="8" data-times="16000,41000,53000,65000,78000,90000,115000"></span>
+	<span class="himn" data-number="354" data-title="Voy caminando" data-slides="6" data-times="9000,18000,27000,46000,54000"></span>
+	<span class="himn" data-number="540" data-title="Ya asoma el sol brillante" data-slides="7" data-times="12000,25000,37000,49000,62000,74000"></span>
+	<span class="himn" data-number="549" data-title="Ya el fin se acerca" data-slides="9" data-times="20000,42000,63000,85000,106000,128000,149000,172000"></span>
+	<span class="himn" data-number="82" data-title="Ya repican las campanas" data-slides="7" data-times="6000,20000,35000,49000,65000,79000"></span>
+	<span class="himn" data-number="64" data-title="Yo canto el poder de Dios" data-slides="7" data-times="12000,30000,52000,70000,92000,110000"></span>
+	<span class="himn" data-number="238" data-title="Yo escucho, buen Jesús" data-slides="7" data-times="15000,38000,60000,82000,103000,125000"></span>
+	<span class="himn" data-number="159" data-title="Yo espero la mañana" data-slides="9" data-times="8000,32000,56000,80000,105000,129000,153000,177000"></span>
+	<span class="himn" data-number="556" data-title="Yo quiero siempre brillar" data-slides="3" data-times="9000,20000"></span>
+	<span class="himn" data-number="577" data-title="Yo quiero trabajar" data-slides="9" data-times="9000,20000,31000,52000,74000,96000,108000,119000"></span>
+	<span class="himn" data-number="454" data-title="Yo quisiera andar con Cristo" data-slides="11" data-times="11000,37000,57000,64000,90000,109000,117000,136000,142000,162000"></span>
+	<span class="himn" data-number="247" data-title="Yo te seguiré" data-slides="9" data-times="9000,29000,50000,70000,90000,111000,131000,152000"></span>
+	<span class="himn" data-number="603" data-title="Yo temprano busco a Cristo" data-slides="7" data-times="14000,36000,58000,81000,104000,126000"></span>
+	<span class="himn" data-number="351" data-title="Yo tengo gozo" data-slides="7" data-times="6000,16000,25000,34000,43000,52000"></span>
+	<span class="himn" data-number="355" data-title="Yo voy feliz" data-slides="7" data-times="16000,35000,53000,71000,89000,108000"></span>
+  </div>
+
+  
+</body>
+
+<script src="/static/js/script.js"></script>
+
+</html>
+
