@@ -4,8 +4,9 @@ import os
 from PyQt5.QtCore import QUrl, QCoreApplication, QTimer, Qt
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtWebEngineWidgets import QWebEngineView
-from flask import Flask, render_template
 import signal
+from flask import Flask, render_template
+from waitress import serve
 
 app = Flask(__name__)
 
@@ -14,7 +15,7 @@ def index():
     return render_template('index.html')
 
 def run_flask_app():
-    app.run()
+    serve(app, host='localhost', port=5000)
 
 def stop_flask_app():
     # Send SIGINT signal to the Flask app process
@@ -62,7 +63,7 @@ if __name__ == '__main__':
     # Create the PyQt5 application
     qtapp = QApplication(sys.argv)
 
-    # Start the Flask web app in a separate thread
+    # Start the Flask web app in a separate thread using Waitress
     flask_thread = threading.Thread(target=run_flask_app)
     flask_thread.start()
 
