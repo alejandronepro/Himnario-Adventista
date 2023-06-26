@@ -1,2 +1,4 @@
 PyQt5>=5.15.9
 PyQtWebEngine>=5.15.6
+flask>=2.3.2
+waitress>=2.1.2
